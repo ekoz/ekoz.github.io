@@ -1,0 +1,98 @@
+<html>
+	<head>
+		
+		<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  	<style type="text/css">
+  		body{
+  			margin: 3px;
+  		}
+  	</style>
+		<script type="text/javascript">
+			String.prototype.fill = function(){
+				var args = arguments;
+				return this.replace(/\{(\d+)\}/g, function(m,i){
+					return args[i];
+				});
+			}
+			var reg = new RegExp("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\r\n]", 'gm');
+			
+			var today = new Date();
+			var diff = 4-today.getDay();
+			var result = today.getTime() + diff*24*60* 60*1000;
+			var thursday = new Date(result);
+			var thu = thursday.getFullYear() + '-' + (thursday.getMonth()+1) + '-' + thursday.getDate();
+			
+			
+			/*
+			 * 当前页面是用来统计每周打球人数，球员列表输入样例，
+			 * 曹鹏 杨鹏 赵海青 施特威 林岱杰 何鑫
+			 * 沈剑 程新 严峻 华天扬
+			 * 程序会自动去除特殊符号，不会去除重复
+			 * 当人数超过20人时，申请2个半场
+			 */
+		</script>
+	</head>
+	
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center"><h1>周四篮球俱乐部活动申请</h1></div>
+			</div>
+			<div class="row">
+				<div class="col-md-2"><h3>球员列表</h3><button class="btn btn-info">分析</button></div>
+				<div class="col-md-10">
+						<textarea id="oldValue" class="form-control" rows="5"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+						<h4><p class="bg-info">输入球员列表后，单击 <kbd>分析</kbd> 按钮，下方将会出现结果</p></h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6" id="newValue">
+					
+				</div>
+				<div class="col-md-6">
+					<textarea class="form-control" rows="8" id="mailContent"></textarea>
+				</div>
+			</div>
+			<textarea class="form-control" rows="5" id="template" style="display:none">
+vivian：
+   您好，本周四篮球俱乐部活动申请信息如下
+          参加人数：{0}人(距离当前统计时间截至)
+          活动时间：{1} 18:30-20:30
+          申请场地：{2}个半场
+特此申请，望批准。谢谢！
+			</textarea>
+		</div>
+		
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			
+			if ($==undefined){
+				alert('请连接网络后使用');	
+			}
+			
+			$('button').on('click', function(){
+				var oldValue = $('#oldValue').val();
+				if (oldValue.length==0) return false;
+				oldValue = oldValue.replace(reg, ' ');
+				var oldValueArr = oldValue.split(' ');
+				var newValueArr = [];
+				$(oldValueArr).each(function(i, item){
+					if ($.trim(item).length>0){
+						newValueArr.push($.trim(item));
+					}
+				});
+				$('#newValue').text(newValueArr.join(' '));
+				var len = newValueArr.length;
+				var template = $('#template').val();
+				template = template.fill(len, thu, len>19?'两':'一');
+				$('#mailContent').val(template);
+			});
+		</script>
+	</body>
+</html>
