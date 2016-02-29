@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Ekoz.GitHub.io : ">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://avatars3.githubusercontent.com/u/3312512" type="image/x-icon" rel="shortcut icon">
+
+      <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="../Font-Awesome-4.5.0/css/font-awesome.css">
+
+    <style type="text/css">
+        body{
+            background: url(../images/wuhan_03.jpg) no-repeat center top;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            overflow-x: hidden;
+            margin: 3px;
+        }
+        img{
+            margin:10px 0px 20px 0px;
+            width: 160px;
+        }
+    </style>
+
+      <script src="../javascripts/jquery.min.js"></script>
+      <script src="../bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            //音乐播放
+           $('#btnPlay').on('click', function(){
+//               var _state = $(this).attr('_state');
+//               if (_state=='off'){
+//                   $('#music').get(0).play();
+//                   $(this).attr('_state', 'on');
+//                   $(this).find('i').removeClass('fa-play-circle-o').addClass('fa-pause-circle-o');
+//               }else{
+//                   $('#music').get(0).pause();
+//                   $(this).attr('_state', 'off');
+//                   $(this).find('i').removeClass('fa-pause-circle-o').addClass('fa-play-circle-o');
+//               }
+
+
+               $('#music').get(0).play();
+               $(this).attr('_state', 'on');
+               $(this).find('i').removeClass('fa-play-circle-o').addClass('fa-pause-circle-o');
+
+               var delay = $('input[name="delay"]:checked').val();
+
+               alert(delay);
+
+               var date = new Date();
+               var hour = date.getHours();
+               var minutes = date.getMinutes();
+
+               alert(minutes);
+
+               var nextMin = 60-minutes;
+               var nextDate = new Date(date.getTime() + nextMin * 60 * 1000);
+               alert(date.getTime());
+               alert(nextDate);
+
+
+
+           });
+
+            //
+
+        });
+    </script>
+
+    <title>莫扎特不唱摇篮曲</title>
+  </head>
+
+  <body>
+      <div class="container">
+          <div class="row clearfix">
+              <div class="col-md-12 column text-center">
+                  <p class="text-center lead text-primary">
+                      <input type="radio" name="delay" checked="checked" value="5"> 5
+                      <input type="radio" name="delay" value="10"> 10
+                  </p>
+                  <p>
+                      <a href="javascript:void(0)" id="btnPlay" _state="off"><i class="fa fa-play-circle-o fa-4x"></i></a>
+                      <audio id="music">
+                          <source  src="../music/bell.mp3" type="audio/mpeg"/>
+                      </audio>
+                  </p>
+              </div>
+          </div>
+      </div>
+  </body>
+</html>
