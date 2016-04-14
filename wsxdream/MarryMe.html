@@ -129,14 +129,27 @@
     <p>请使用空格键或者方向键浏览</p>
 </div>
 <script>
-    if ("ontouchstart" in document.documentElement) {
-        //document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+    if (body.className='impress-not-supported'){
+        document.getElementById('impress').style.display = 'none';
     }
 </script>
 
 <script type="text/javascript" charset="utf-8" src="resource/impress.js"></script>
+<script type="text/javascript" charset="utf-8" src="resource/trianglify.min.js"></script>
 <script type="text/javascript">
     impress().init();
+    
+    var pattern = Trianglify({
+		    width: window.innerWidth,
+		    height: window.innerHeight
+		});
+		document.body.style.backgroundImage = 'url(' + pattern.png() + ')';
 </script>
+<audio autoplay="autoplay" loop="loop">
+    <source src="../music/hai_ku_shi_lan.mp3" type="audio/mp3">
+    <source src="../music/hai_ku_shi_lan.ogg" type="audio/ogg">
+    <!-- If no support at all. -->
+    HTML5 audio not supported 
+</audio>
 </body>
 </html>
