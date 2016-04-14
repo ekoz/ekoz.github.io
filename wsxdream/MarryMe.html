@@ -139,11 +139,22 @@
 <script type="text/javascript">
     impress().init();
     
-    var pattern = Trianglify({
+    /**
+     * change background color
+     */
+    var trianglify = function(){
+  		var pattern = Trianglify({
 		    width: window.innerWidth,
 		    height: window.innerHeight
-		});
-		document.body.style.backgroundImage = 'url(' + pattern.png() + ')';
+			});
+			document.body.style.backgroundImage = 'url(' + pattern.png() + ')';
+  	}
+    
+    trianglify();
+    window.setInterval(function(){
+    	trianglify();
+    }, 5*1000);
+    
 </script>
 <audio autoplay="autoplay" loop="loop">
     <source src="../music/hai_ku_shi_lan.mp3" type="audio/mp3">
