@@ -57,8 +57,14 @@
     <script type="text/javascript" charset="utf-8" src="resource/arctext/js/jquery.arctext.js"></script>
 
     <script type="text/javascript">
+        var userAgent = window.navigator.userAgent.toLowerCase();
+        var isWeixin = userAgent.match(/MicroMessenger/i)=='micromessenger';
         if (!window.confirm("建议在wifi环境下访问，土豪请随意，是否继续？")){
-            window.close();
+            if (isWeixin){
+                WeixinJSBridge.call('closeWindow');
+            }else{
+                window.close();
+            }
         }
     </script>
 
@@ -121,8 +127,7 @@
 
             var ind = 1;
 
-            var userAgent = window.navigator.userAgent.toLowerCase();
-            if (userAgent.match(/MicroMessenger/i)=='micromessenger'){
+            if (isWeixin){
                 //微信浏览器中自动播放音频需要特殊处理
                 document.addEventListener("WeixinJSBridgeReady", function () {
                     $('audio')[0].play();
