@@ -59,11 +59,13 @@
     <script type="text/javascript">
         var userAgent = window.navigator.userAgent.toLowerCase();
         var isWeixin = userAgent.match(/MicroMessenger/i)=='micromessenger';
+
         if (!window.confirm("建议在wifi环境下访问，土豪请随意，是否继续？")){
             if (isWeixin){
+                window.open('about:blank', '_self').close();
                 WeixinJSBridge.call('closeWindow');
             }else{
-                window.close();
+                window.open('about:blank', '_self').close();
             }
         }
     </script>
