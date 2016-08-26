@@ -6,7 +6,7 @@
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link href="http://ekoz.github.io/wsxdream/imgs/wsxdream_64X64.ico" type="image/x-icon" rel="shortcut icon">
+    <link href="imgs/wsxdream-1_64×64.ico" type="image/x-icon" rel="shortcut icon">
     <meta name="author" content="Eko James" />
 
     <link rel="stylesheet" type="text/css" href="../Font-Awesome-4.5.0/css/font-awesome.css">
@@ -20,7 +20,7 @@
             overflow: hidden;
         }
         body {
-            background: #fff;
+            background: url("imgs/red.jpg");
             font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
             font-size: 12px;
             color:#000;
@@ -35,7 +35,7 @@
             border-radius: 300px;
         }
         .welcome-header, .welcome-footer{
-            color: #FF8000;
+            color: #000000;
             font-size: 12px;
             font-weight: bolder;
         }
@@ -52,7 +52,6 @@
     </style>
 
     <script type="text/javascript" charset="utf-8" src="../javascripts/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="resource/trianglify.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="resource/snowfall.min.jquery.js"></script>
     <script type="text/javascript" charset="utf-8" src="resource/arctext/js/jquery.arctext.js"></script>
 
@@ -74,7 +73,7 @@
 
     <body>
         <div id="weixinImg" style="display:none;">
-            <img src="imgs/wsxdream.jpg"/>
+            <img src="imgs/wsxdream-1.jpg"/>
         </div>
 
         <div class="swiper-container">
@@ -85,6 +84,12 @@
                 <img class="swiper-slide" src="imgs/1.jpg">
                 <img class="swiper-slide" src="imgs/2.jpg">
                 <img class="swiper-slide" src="imgs/3.jpg">
+                <img class="swiper-slide" src="imgs/4.jpg">
+                <img class="swiper-slide" src="imgs/5.jpg">
+                <img class="swiper-slide" src="imgs/6.jpg">
+                <img class="swiper-slide" src="imgs/7.jpg">
+                <img class="swiper-slide" src="imgs/8.jpg">
+                <img class="swiper-slide" src="imgs/9.jpg">
             </div>
 
             <div class="welcome-footer">时间：2016年10月2日 11:30</div>
@@ -94,7 +99,7 @@
 
         <i class="fa fa-pause-circle fa-3x" id="btnPlay" _play="on"></i>
         <audio loop>
-            <source src="../music/hai_ku_shi_lan.mp3" type="audio/mp3">
+            <source src="../music/i_do_colbie_caillat.mp3" type="audio/mp3">
         </audio>
         <script type="text/javascript">
             var _cellHeight = 0;
@@ -156,22 +161,21 @@
 
 
             //背景色切换
-            var trianglify = function(){
+            /*var trianglify = function(){
                 var pattern = Trianglify({
                     width: window.innerWidth,
                     height: window.innerHeight
                 });
                 document.body.style.backgroundImage = 'url(' + pattern.png() + ')';
             }
-            trianglify();
+            trianglify();*/
             window.setInterval(function(){
-                trianglify();
+                //trianglify();
                 $('.swiper-container').find('.swiper-slide').hide(1000);
-                $(children[ind]).show(1000);
+                $(children[ind]).slideDown(1000);
                 ind++;
                 if (ind>=children.length) ind=0;
             }, 5*1000);
-
 
             //玫瑰雨
             window.setTimeout(function(){
