@@ -26,7 +26,7 @@
             font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
             font-size: 12px;
             color:#000;
-            margin: 0px;
+            margin: 3px;
             padding: 0;
         }
         div {
@@ -56,20 +56,7 @@
     <script type="text/javascript" charset="utf-8" src="../javascripts/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="resource/snowfall.min.jquery.js"></script>
     <script type="text/javascript" charset="utf-8" src="resource/arctext/js/jquery.arctext.js"></script>
-
-    <script type="text/javascript">
-        var userAgent = window.navigator.userAgent.toLowerCase();
-        var isWeixin = userAgent.match(/MicroMessenger/i)=='micromessenger';
-
-        if (!window.confirm("建议在wifi环境下访问，土豪请随意，是否继续？")){
-            if (isWeixin){
-                window.open('about:blank', '_self').close();
-                WeixinJSBridge.call('closeWindow');
-            }else{
-                window.open('about:blank', '_self').close();
-            }
-        }
-    </script>
+    <script type="text/javascript" charset="utf-8" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 </head>
 
@@ -83,6 +70,7 @@
             <div class="welcome-header">共同为我们的爱情见证祝福</div>
 
             <div class="swiper-cell">
+            	<!--
                 <img class="swiper-slide" src="imgs/1.jpg">
                 <img class="swiper-slide" src="imgs/2.jpg">
                 <img class="swiper-slide" src="imgs/3.jpg">
@@ -92,6 +80,7 @@
                 <img class="swiper-slide" src="imgs/7.jpg">
                 <img class="swiper-slide" src="imgs/8.jpg">
                 <img class="swiper-slide" src="imgs/9.jpg">
+                -->
             </div>
 
             <div class="welcome-footer">时间：2016年10月2日 11:30</div>
@@ -104,91 +93,92 @@
             <source src="../music/i_do_colbie_caillat.mp3" type="audio/mp3">
         </audio>
         <script type="text/javascript">
-            var _cellHeight = 0;
-            var scrWidth = document.documentElement.clientWidth;
-            var scrHeight = document.documentElement.clientHeight;
+        		var userAgent = window.navigator.userAgent.toLowerCase();
+		        var isWeixin = userAgent.match(/MicroMessenger/i)=='micromessenger';
+						
+        		function init(){
+        				for (var i=1;i<10;i++){
+        					$('.swiper-cell').append('<img class="swiper-slide" src="imgs/' + i + '.jpg">');
+        				}
+        			
+        				var _cellHeight = 0;
+		            var scrWidth = document.documentElement.clientWidth;
+		            var scrHeight = document.documentElement.clientHeight;
+		
+		            $('.welcome-header').arctext({radius: 300});
+		            $('.welcome-footer').arctext({radius: 300, dir:-1});
+		
+		            if (scrWidth<scrHeight){
+		                //mobile
+		                $('.swiper-container').find('.swiper-slide').height(scrHeight-140).hide();
+		                
+		                window.setTimeout(function(){
+		                    _cellHeight = $('.swiper-container .swiper-slide').height();
+		                    var _top = (scrHeight - _cellHeight)/2;
+		                    $('.swiper-cell').height(_cellHeight);
+		                    $('.swiper-container').css({'padding-top': _top-30});
+		                }, 50);
+		            }else{
+		                $('.swiper-container').find('.swiper-slide').height(scrHeight).hide();
+		                $('.swiper-cell').height($('.swiper-container .swiper-slide').height());
+		            }
+		            var children = $('.swiper-container').find('.swiper-slide');
+		            $(children[0]).show();
+        			
+        				var ind = 1;
+        			
+        				$('#btnPlay').click(function(){
 
-            $('.welcome-header').arctext({radius: 300});
-            $('.welcome-footer').arctext({radius: 300, dir:-1});
-
-            if (scrWidth<scrHeight){
-                //mobile
-                $('.swiper-container').find('.swiper-slide').width(scrWidth).hide();
-                //如果不延时100毫秒执行，会导致取得的height为0，这是为什么呢？在webstorm 中需要延时执行，用eclipse开发的时候却不需要，怪怪的，肯定我代码哪里有问题。。。
-                //找到bug，因为玫瑰雨导致高度存在问题
-                window.setTimeout(function(){
-                    _cellHeight = $('.swiper-container .swiper-slide').height();
-                    var _top = (scrHeight - _cellHeight)/2;
-                    $('.swiper-cell').height(_cellHeight);
-                    $('.swiper-container').css({'padding-top': _top-30});
-                }, 50);
-            }else{
-                $('.swiper-container').find('.swiper-slide').height(scrHeight).hide();
-                $('.swiper-cell').height($('.swiper-container .swiper-slide').height());
-            }
-            var children = $('.swiper-container').find('.swiper-slide');
-//            window.setTimeout(function(){
-//                $(children[0]).animate({height: 0, opacity: 'hide'}, 1000, 'linear', function(){
-//                    //$(this).show();
-//                });
-//            }, 320);
-            $(children[0]).show();
-
-            var ind = 1;
-
+		                var isPlay = $(this).attr('_play');
+		                if (isPlay=='on'){
+		                    //on 正在播放
+		                    $(this).removeClass('fa-pause-circle').addClass('fa-play-circle').attr('_play', 'off');
+		                    $('audio')[0].pause();
+		                }else{
+		                    //off
+		                    $(this).removeClass('fa-play-circle').addClass('fa-pause-circle').attr('_play', 'on');
+		                    $('audio')[0].play();
+		                }
+		            });
+		
+		            window.setInterval(function(){
+		                $('.swiper-container').find('.swiper-slide').hide(1000);
+		                $(children[ind]).slideDown(1000);
+		                ind++;
+		                if (ind>=children.length) ind=0;
+		            }, 5*1000);
+		
+		            //玫瑰雨
+		            window.setTimeout(function(){
+		                $('body').snowfall({
+		                    flakeCount: 6,
+		                    image :'imgs/rose.png',
+		                    minSize: 10,
+		                    maxSize: 32
+		                });
+		                $('audio')[0].play();
+		            }, 300);
+		            
+        		
+        		}
+        		
             if (isWeixin){
                 //微信浏览器中自动播放音频需要特殊处理
                 document.addEventListener("WeixinJSBridgeReady", function () {
-                    $('audio')[0].play();
+                		if (window.confirm("建议在wifi环境下访问，土豪请随意，是否继续？")){
+						           init();
+						        }else{
+						        	wx.closeWindow();	
+						        }
                 }, false);
             }else{
-                //其他浏览器播放音频
-                window.setTimeout(function(){
-                    $('audio')[0].play();
-                }, 0.3*1000);
+            		if (window.confirm("建议在wifi环境下访问，土豪请随意，是否继续？")){
+				           init();
+				        }else{
+				        	window.open('about:blank', '_self').close();
+				        }
             }
-            $('#btnPlay').click(function(){
-
-                var isPlay = $(this).attr('_play');
-                if (isPlay=='on'){
-                    //on 正在播放
-                    $(this).removeClass('fa-pause-circle').addClass('fa-play-circle').attr('_play', 'off');
-                    $('audio')[0].pause();
-                }else{
-                    //off
-                    $(this).removeClass('fa-play-circle').addClass('fa-pause-circle').attr('_play', 'on');
-                    $('audio')[0].play();
-                }
-            });
-
-
-            //背景色切换
-            /*var trianglify = function(){
-                var pattern = Trianglify({
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                });
-                document.body.style.backgroundImage = 'url(' + pattern.png() + ')';
-            }
-            trianglify();*/
-            window.setInterval(function(){
-                //trianglify();
-                $('.swiper-container').find('.swiper-slide').hide(1000);
-                $(children[ind]).slideDown(1000);
-                ind++;
-                if (ind>=children.length) ind=0;
-            }, 5*1000);
-
-            //玫瑰雨
-            window.setTimeout(function(){
-                $('body').snowfall({
-                    flakeCount: 6,
-                    image :'imgs/rose.png',
-                    minSize: 10,
-                    maxSize: 32
-                });
-            }, 350);
-
+            
         </script>
     </body>
 </html>
