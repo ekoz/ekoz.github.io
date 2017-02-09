@@ -1,108 +1,288 @@
 <!DOCTYPE html>
 <html>
-
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Ekoz.GitHub.io : ">
-    
-    <link href="https://avatars3.githubusercontent.com/u/3312512" type="image/x-icon" rel="shortcut icon">
-
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-    <style type="text/css">
-        body{
-            background-color: #000;
-            overflow: hidden;
-        }
-    </style>
-    <script src="javascripts/jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-
-    <title>莫扎特不唱摇篮曲</title>
-  </head>
-
-  <body>
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-          <div class="container">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="javascript:void(0)">关于记忆</a>
-              </div>
-              <div id="navbar" class="collapse navbar-collapse">
-                  <ul class="nav navbar-nav">
-                      <li class="active"><a href="javascript:void(0)">西风凉</a></li>
-                      <li><a href="javascript:void(0)">人生路</a></li>
-                      <li><a href="javascript:void(0)">雨惊梦</a></li>
-                  </ul>
-                  <ul class="nav navbar-nav navbar-right">
-                      <li><a href="https://github.com/ekoz">View on GitHub</a></li>
-                  </ul>
-              </div><!--/.nav-collapse -->
-          </div><!--/.container -->
-      </nav><!--/nav-->
-
-      <div class="container">
-          <div class="row clearfix">
-              <div class="col-md-12 column">
-                  <div class="carousel slide" id="carousel-558217">
-                      <ol class="carousel-indicators">
-                          <li class="active" data-slide-to="0" data-target="#carousel-558217">
-                          </li>
-                          <li data-slide-to="1" data-target="#carousel-558217">
-                          </li>
-                          <li data-slide-to="2" data-target="#carousel-558217">
-                          </li>
-                      </ol>
-                      <div class="carousel-inner">
-                          <div class="item active">
-                              <img alt="" src="images/nba/1.jpg"/>
-                              <div class="carousel-caption">
-                                  <h4>
-                                      Tracy Mcgrady
-                                  </h4>
-                                  <p>
-                                      If you were a teardrop;In my eye, For fear of losing you,I would never cry. And if the golden sun,Should cease to shine its light, Just one smile from you,Would make my whole world bright.
-                                  </p>
-                              </div>
-                          </div>
-                          <div class="item">
-                              <img alt="" src="images/nba/2.jpg" />
-                              <div class="carousel-caption">
-                                  <h4>
-                                      Tim Duncan
-                                  </h4>
-                                  <p>
-                                      If I could save time in a bottle, the first thing that I'd like to do, is to save every day until eternity passes away, just to spend them with you, If I could make days last forever, if words could make wishes come true, I'd save every day like a treasure and then, again I would spend them with you
-                                  </p>
-                              </div>
-                          </div>
-                          <div class="item">
-                              <img alt="" src="images/nba/3.jpg" />
-                              <div class="carousel-caption">
-                                  <h4>
-                                      Tracy Mcgrady
-                                  </h4>
-                                  <p>
-                                      Thank you for comforting me when I'm sad
-                                      Loving me when I'm mad
-                                      Picking me up when I'm down
-                                      Thank you for being my friend and being around
-                                      Teaching me the meaning of love
-                                      Encouraging me when I need a shove
-                                      But most of all thank you for
-                                      Loving me for who I am
-                                  </p>
-                              </div>
-                          </div>
-                      </div> <a class="left carousel-control" href="#carousel-558217" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-558217" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </body>
+	<head>
+		<title>莫扎特不唱摇篮曲</title>
+		<link href="https://avatars3.githubusercontent.com/u/3312512" type="image/x-icon" rel="shortcut icon">
+		<script src="resume/js/jquery.min.js"> </script>
+		<link href="resume/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="resume/css/style.css" rel="stylesheet" type="text/css" media="all" />
+		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css' />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<script type="text/javascript" src="resume/js/move-top.js"></script>
+		<script type="text/javascript" src="resume/js/easing.js"></script>
+		<script type="text/javascript">
+					jQuery(document).ready(function($) {
+						$(".scroll").click(function(event){		
+							event.preventDefault();
+							$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+						});
+					});
+				</script>
+		</head>
+	<body>
+		<div id="top-top" class="headerbg">
+			<div class="header">
+				<div class="container">
+					<div class="logo">
+						<a href="javascript:void(0);">莫扎特不唱摇篮曲</a>
+					</div>
+					<div class="nav">
+						<ul>
+							<li><a class="scroll" href="#about">关于</a></li>
+							<li><a class="scroll" href="#skills">技能</a></li>
+							<li><a class="scroll" href="#port">产品</a></li>
+							<li><a class="scroll" href="#contact">联系方式</a></li>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="banner">
+				<div class="container">
+					<div class="banner-info">
+						<div class="bannerlogo">
+							<img src="resume/images/about_me.jpg" class="img-rounded" />
+						</div>
+						<div class="bannerhead">
+							<h2>
+								我是 <span>Eko Zhan</span>
+							</h2>
+							<h3>软件工程师</h3>
+							<p>熟悉 Java Web 开发，精通 SSH，SpringMvc 架构，熟悉常用设计模式，对 Shell、 Python 也有所了解。</p>
+							<a class="downarrow scroll" href="#about"><span> </span></a>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div id="about" class="about">
+				<div class="container">
+					<div class="header-section text-center">
+						<h2>
+							<span> </span>关于<span> </span>
+						</h2>
+					</div>
+					<span><p></p></span>
+	
+					<div class="years">
+						<h4>
+							<b>2008/8 ～ 2014/8</b>
+						</h4>
+						<span><h4><a href="http://www.ecasesoft.com/" target="_blank">上海软易信息技术有限公司</a> <small>高级软件工程师</small></h4></span>
+						<p>
+							<i>从2008年8月1日至2014年7月31日一直在上海软易信息技术有限公司从事OA系统B/S端产品开发，熟悉企业管理中涉及到的各个应用模块（包括但不仅限于工作流设计，财务请款报销，文档/档案/知识管理，请购采购/物品出入库，招聘/任务管理，收发文/签报/请假/调休/合同管理等等，如有面试机会可详述）。主要职责包括方案讨论，需求分析，详细设计和代码编写等。个人能力着重点在javaee技术，有跨国集团公司功能定制开发与维护以及多语言开发经验（domino平台和javaee平台，中文/英文/俄文）。</i>
+						</p>
+					</div>
+	
+					<div class="years">
+						<h4>
+							<b>2014/8 ～ 至今</b>
+						</h4>
+						<span><h4><a href="http://www.xiaoi.com/" target="_blank">小i机器人</a> <small>高级软件工程师</small></h4></span>
+						<p>
+							<i></i>
+						</p>
+					</div>
+	
+					<a class="arrow scroll" href="#skills"><span> </span></a>
+				</div>
+			</div>
+	
+			<div id="skills" class="skills">
+				<div class="container">
+					<div class="skills-grids">
+						<div class="skill-section text-center">
+							<h2>
+								<span> </span>技能<span> </span>
+							</h2>
+						</div>
+						<div class="services_grids">
+							<div id="canvas">
+								<div class="skill-grids text-center">
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-1" percentage="80"></div>
+											<h3>Java</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-2" percentage="90"></div>
+											<h3>Javascript</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-3" percentage="90"></div>
+											<h3>jQuery</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-4" percentage="80"></div>
+											<h3>SpringMvc</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-5" percentage="80"></div>
+											<h3>Sturts2</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-6" percentage="90"></div>
+											<h3>Hibernate</h3>
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="skill-grids text-center">
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-7" percentage="80"></div>
+											<h3>Oracle</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-8" percentage="80"></div>
+											<h3>SQLServer</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-9" percentage="80"></div>
+											<h3>Mysql</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-10" percentage="90"></div>
+											<h3>Domino</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-11" percentage="60"></div>
+											<h3>MongoDB</h3>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="skill-grid">
+											<div class="circle" id="circles-12" percentage="60"></div>
+											<h3>Python</h3>
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+						<!---->
+						<script type="text/javascript" src="resume/js/circles.js"></script>
+						<script type="text/javascript">
+						/*<![CDATA[*/
+							var colors = [
+									['#181115', '#30222A'], ['#181115', '#30222A'], ['#181115', '#30222A'], ['#181115', '#30222A'],
+									['#181115', '#30222A'], ['#181115', '#30222A'], ['#181115', '#30222A'], ['#181115', '#30222A'],
+									['#181115', '#30222A'], ['#181115', '#30222A'], ['#181115', '#30222A'], ['#181115', '#30222A']
+								];
+							for (var i = 1; i <= 12; i++) {
+								var child = document.getElementById('circles-' + i),
+									percentage = $(child).attr('percentage');
+									
+								Circles.create({
+									id:         child.id,
+									percentage: percentage,
+									radius:     60,
+									width:      3,
+									number:   	percentage,
+									text:       '%',
+									colors:     colors[i - 1]
+								});
+							}
+						/*]]>*/
+						</script>
+	
+					</div>
+					<a class="down scroll" href="#port"><span> </span></a>
+				</div>
+			</div>
+		
+		
+		<div id="port" class="Portfolio">
+			<div class="Portfolio-section text-center">
+				<h2>
+					<span> </span>产品<span> </span>
+				</h2>
+			</div>
+			<div class="container">
+				<div class="portfolio-grids">
+					<div class="portfolio-grid col-md-4">
+						<a href="http://www.xiaoi.com/virtual/enterprise/kbase.html" target="_blank"><img src="resume/images/monitr4.png" /></a>
+						<p>智能座席知识库产品</p>
+						<a class="rightarrow" href="http://www.xiaoi.com/virtual/enterprise/kbase.html" target="_blank"><span> </span></a>
+					</div>
+					<div class="portfolio-grid col-md-4">
+						<a href="http://www.xiaoi.com/virtual/enterprise/portal.html" target="_blank"><img src="resume/images/monitr5.png" style="height:256px;width:120px;"/></a>
+						<p>智能知识门户产品</p>
+						<a class="rightarrow" href="http://www.xiaoi.com/virtual/enterprise/portal.html" target="_blank"><span> </span></a>
+					</div>
+					<div class="portfolio-grid col-md-4">
+						<a href="https://kefu.ffan.com/kbase-mobile/home.do?appid=john&amp;device=ios" target="_blank"><img src="resume/images/monitr6.png" style="height:256px;width:120px;"/></a>
+						<p>快钱帮助中心</p>
+						<a class="rightarrow" href="https://kefu.ffan.com/kbase-mobile/home.do?appid=john&amp;device=ios" target="_blank"><span> </span></a>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<a class="portdown scroll" href="#contact"><span> </span></a>
+			</div>
+		</div>
+	
+		<div id="contact" class="footer">
+			<div class="container contact-container">
+				<div class="contact-section text-center">
+					<h2 style="color:#000;">
+						<span> </span>联系方式<span> </span>
+					</h2>
+				</div>
+				<div class="row">
+	
+					<div class="col-md-6">
+						<div class="footer-left">
+							<div class="social-icons">
+								<a href="http://blog.csdn.net/xhzq1986" target="_blank"><img src="resume/images/csdn.jpg" style="width:30px; height:30px;" class="img-circle"/></a>
+								<a href="https://github.com/ekoz" target="_blank"><img src="resume/images/github.ico" style="width:30px; height:30px;" class="img-circle"/></a>
+								<a href="https://twitter.com/ekozjames" target="_blank"><img src="resume/images/twt.png" style="width:30px; height:30px;" class="img-circle"/></a>
+							</div>
+							<br/>
+							<address>
+								<a href="mailto:eko.z@outlook.com">eko.z@outlook.com</a>
+							</address>
+						</div>
+					</div>
+	
+					<div class="col-md-6">
+						<div class="footer-left">
+							<h4>
+								<p class="bg-info" style="color:#000;border-radius:10px;">
+									性格大方活泼，工作认真负责，能吃苦耐劳。有较强的组织能力、实际动手能力和团体协作精神，能迅速的适应各种环境，并融合其中。渴望自我能力的实现，在追求幸福成功的道路上能承受坚苦的过程，对自己喜欢的事物有坚定的信念。人生格言：<strong>经历是一笔财富</strong>。
+								</p>
+							</h4>
+						</div>
+						<div class="clear"></div>
+						<p class="copy-right">
+							
+						</p>
+					</div>
+				</div>
+			</div>
+			<a class="up scroll" href="#top-top"><span> </span></a>
+	
+		</div>
+	</div>
+	</body>
 </html>
