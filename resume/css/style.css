@@ -907,3 +907,6 @@ p.copy-right a{
 h4 a{
 	color: #fff;
 }
+.popover-content{
+	padding: 8px 8px;
+}

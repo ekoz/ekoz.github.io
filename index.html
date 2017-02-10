@@ -11,6 +11,7 @@
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 		<script type="text/javascript" src="resume/js/move-top.js"></script>
 		<script type="text/javascript" src="resume/js/easing.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
 					jQuery(document).ready(function($) {
 						$(".scroll").click(function(event){		
@@ -257,6 +258,8 @@
 								<a href="http://blog.csdn.net/xhzq1986" target="_blank"><img src="resume/images/csdn.jpg" style="width:30px; height:30px;" class="img-circle"/></a>
 								<a href="https://github.com/ekoz" target="_blank"><img src="resume/images/github.ico" style="width:30px; height:30px;" class="img-circle"/></a>
 								<a href="https://twitter.com/ekozjames" target="_blank"><img src="resume/images/twt.png" style="width:30px; height:30px;" class="img-circle"/></a>
+								<a href="https://weibo.com/ekoz" target="_blank"><img src="resume/images/weibo.png" style="width:30px; height:30px;" class="img-circle"/></a>
+								<a href="javascript:void(0)" id="weixin"><img src="resume/images/weixin.png" style="width:30px; height:30px;" class="img-circle"/></a>
 							</div>
 							<br/>
 							<address>
@@ -278,10 +281,34 @@
 							
 						</p>
 					</div>
+
+					<script type="text/javascript">
+						$('#weixin').popover({
+							trigger:'manual',
+							placement : 'right', //placement of the popover. also can use top, bottom, left or right
+							//title : '<div style="text-align:center; color:red; text-decoration:underline; font-size:14px;"> Muah ha ha</div>', //this is the top title bar of the popover. add some basic css
+							html: 'true', //needed to show html of course
+							content : '<div style="background: #000;"><img src="resume/images/weixin_ekoz.png" width="129" height="129" /></div>', //this is the content of the html box. add the image here or anything you want really.
+							animation: false
+						}).on("mouseenter", function () {
+							var _this = this;
+							$(this).popover("show");
+							$(this).siblings(".popover").on("mouseleave", function () {
+								$(_this).popover('hide');
+							});
+						}).on("mouseleave", function () {
+							var _this = this;
+							setTimeout(function () {
+								if (!$(".popover:hover").length) {
+									$(_this).popover("hide")
+								}
+							}, 100);
+						});
+					</script>
 				</div>
 			</div>
 			<a class="up scroll" href="#top-top"><span> </span></a>
-	
+
 		</div>
 	</div>
 	</body>
