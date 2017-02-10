@@ -1,4 +1,4 @@
-#ÄªÔúÌØ²»³ªÒ¡ÀºÇú
+#è«æ‰ç‰¹ä¸å”±æ‘‡ç¯®æ›²
 ###[ekoz.github.io](https://ekoz.github.io)
 
 	var ekoz = {
