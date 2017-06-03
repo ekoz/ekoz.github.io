@@ -29,6 +29,10 @@ body input[type="text"],body input[type="submit"],body textarea,body input[type=
 }
 /*------ HEADER STARTS---------*/
 .header{
+	position: fixed;
+	top:0;
+	width:100%;
+	z-index: 998;
 	background:rgba(0, 0, 0, 0.24);
 }
 /*------ CONTAINER STARTS---------*/
@@ -909,4 +913,11 @@ h4 a{
 }
 .popover-content{
 	padding: 8px 8px;
+}
+.gh-forkme {
+	z-index: 999;
+	position: fixed;
+	top: 0;
+	right: 0;
+	border: 0;
 }
