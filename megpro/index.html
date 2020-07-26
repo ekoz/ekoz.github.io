@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="col-md-4">
+        <textarea
+          id="source"
+          class="form-control"
+          placeholder="西文逗号分隔，如：张三,李四, 王五"
+        ></textarea>
+      </div>
+      <div class="col-md-4">
+        <input
+          type="button"
+          class="btn btn-default"
+          id="btnTransfer"
+          value="随机生成顺序"
+          onclick="handleTransfer()"
+        />
+      </div>
+      <div class="col-md-4">
+        <textarea id="target" class="form-control"></textarea>
+      </div>
+    </div>
+
+    <script>
+      function shuffle(arr) {
+        let i = arr.length
+        while (i) {
+          let j = Math.floor(Math.random() * i--)
+          ;[arr[j], arr[i]] = [arr[i], arr[j]]
+        }
+      }
+
+      function handleTransfer() {
+        let source = document.querySelector('#source').value
+        console.log(source)
+        let arr = source.split(',')
+        shuffle(arr)
+        document.querySelector('#target').value = arr.join(', ')
+      }
+    </script>
+  </body>
+</html>
