@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Blog
+title: Everything happens for a reason
 subtitle: 关于当前工程是如何启动的
 author: eko.zhan
 categories: jekyll
