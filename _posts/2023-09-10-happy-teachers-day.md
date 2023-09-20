@@ -22,7 +22,7 @@ sidebar: []
 ---
 
 
-# blog
+# Blog
 
 
 ## 运行命令
