@@ -38,9 +38,16 @@ sidebar: []
 1. [Ruby](https://github.com/ruby/ruby) ，Win10 使用  [RubyInstaller-WITH DEVKTI](https://rubyinstaller.org/downloads/)，笔者的版本是3.1.2-1(x64)，注意安装路径不要有空格
 2. 安装完毕后，需要继续安装 `MSYS2`，理论上Finish窗口页面默认勾选，直接单击Finish，就继续安装 `MSYS2`，如果你一不小心没有勾选单击了 Finish，可以在 cmd 中运行命令 `ridk install`，效果一样 
 3. 安装 `MSYS2` 窗口中，提示 `Which components shall be installed? If unsure press ENTER [1, 3]`，可以直接按回车键
+![](/assets/images/20231023183226.png)
+
+![](/assets/images/20231023183238.png)
 4. 安装完毕后，cmd 输入 ruby -v 查看版本
 5. 参考 [jekyll 官网](https://jekyllrb.com)上的命令安装 jekyll 和 bundler，`gem install bundler jekyll`
 6. `jekyll -v` `bundler -v` 验证安装是否成功
 7. 参考 [jekyll-theme-yat](https://github.com/jeffreytse/jekyll-theme-yat) 的步骤来使用即可，笔者是 `git clone https://github.com/jeffreytse/jekyll-theme-yat.git blog`
+```shell
+# gem 切换国内镜像源
+gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
+```
 8. 进入 blog 目录后，运行 `bundle exec jekyll serve`
 9. 访问 [http://localhost:4000/](http://localhost:4000/)
