@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Linux（以 CentOS7.2 为主） | 飞翔的荷兰人</title>
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Linux（以 CentOS7.2 为主）">
+<meta name="author" content="eko.zhan">
+<meta property="og:locale" content="zh_CN">
+<meta name="description" content="Linux（以 CentOS7.2 为主）">
+<meta property="og:description" content="Linux（以 CentOS7.2 为主）">
+<link rel="canonical" href="/summary/2021/11/10/linux.html">
+<meta property="og:url" content="/summary/2021/11/10/linux.html">
+<meta property="og:site_name" content="飞翔的荷兰人">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2021-11-10T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Linux（以 CentOS7.2 为主）">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"eko.zhan"},"dateModified":"2021-11-10T00:00:00+00:00","datePublished":"2021-11-10T00:00:00+00:00","description":"Linux（以 CentOS7.2 为主）","headline":"Linux（以 CentOS7.2 为主）","mainEntityOfPage":{"@type":"WebPage","@id":"/summary/2021/11/10/linux.html"},"url":"/summary/2021/11/10/linux.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/avatar.jpg">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="飞翔的荷兰人">
+<!-- Google tag (gtag.js) -->
+<script>
+  function initGoogleAnalytics() {
+    var doNotTrack = (window.doNotTrack === "1" || navigator.doNotTrack === "1" ||
+      navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1");
+    var enableDNT = "false" == "true";
+
+    if (!enableDNT || !doNotTrack) {
+      var measurementId = 'G-CKCQ9YNCG2';
+
+      (function(src) {
+        var tag = document.createElement('script');
+        tag.src = src;
+        tag.async = true;
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      })('https://www.googletagmanager.com/gtag/js?id=' + measurementId);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', measurementId);
+    }
+  }
+  window.addEventListener("load", initGoogleAnalytics);
+</script>
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/umd/photoswipe.umd.min.js" async></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="飞翔的荷兰人" src="/assets/images/avatar.jpg" onerror="this.style.display='none'">
+  飞翔的荷兰人
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/">首页</a><a class="page-link" href="/archives.html">文章</a><a class="page-link" href="/categories.html">分类</a><a class="page-link" href="/tags.html">标签</a><a class="page-link" href="/about.html">关于</a>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    html .page-banner .page-banner-img > *:first-child {
+      opacity: 0.8;
+    }
+
+    html[data-theme="dark"] .page-banner .page-banner-img > *:first-child {
+      opacity: 0.5744;
+    }
+  </style>
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/assets/images/banners/banner-linux.jpg)"></div>
+        <img class="img-placeholder" src="/assets/images/banners/banner-linux.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Linux（以 CentOS7.2 为主）</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2021-11-10T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-11-10
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> eko.zhan</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 18 mins</span>
+  </div>
+<div class="post-tags"><a class="post-tag" href="/tags.html#linux">#linux</a></div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('on' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="linux以-centos72-为主">Linux（以 CentOS7.2 为主）</h1>
+
+<h2 id="装机必备">装机必备</h2>
+
+<ul>
+  <li>yum 源</li>
+  <li>docker</li>
+  <li>docker-compose</li>
+  <li>python2.7 与 python3.6 兼容</li>
+  <li>防火墙</li>
+  <li>jdk</li>
+  <li>gcc</li>
+  <li>sudoers 与 755</li>
+</ul>
+
+<h2 id="国内-yum-源">国内 yum 源</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
+mv CentOS7-Base-163.repo /etc/yum.repos.d/
+yum clean all
+yum makecache
+</code></pre></div></div>
+
+<p><a href="https://www.runoob.com/linux/linux-yum.html">https://www.runoob.com/linux/linux-yum.html</a></p>
+
+<p><a href="http://mirrors.163.com/.help/centos.html">http://mirrors.163.com/.help/centos.html</a></p>
+
+<h2 id="防火墙">防火墙</h2>
+
+<ol>
+  <li>centOS7 永久关闭防火墙(防火墙的基本使用)</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看状态</span>
+systemctl status firewalld.service
+
+<span class="c"># 关闭防火墙</span>
+systemctl stop firewalld.service
+
+<span class="c"># 开启防火墙</span>
+systemctl start firewalld.service
+
+<span class="c"># 设置开机启动</span>
+systemctl <span class="nb">enable </span>firewalld.service
+
+<span class="c"># 禁止开机启动</span>
+systemctl disable firewalld.service
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/ViJayThresh/article/details/81284007">centOS7永久关闭防火墙(防火墙的基本使用)</a></p>
+
+<ol>
+  <li>CentOS7 查看和关闭防火墙</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--state</span>
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/ytangdigl/article/details/79796961">CentOS7查看和关闭防火墙</a></p>
+
+<ol>
+  <li>CentOS 防火墙添加例外端口</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看状态</span>
+
+firewall-cmd <span class="nt">--state</span>
+
+<span class="c"># 添加 8080 例外端口</span>
+<span class="c"># –zone 作用域</span>
+<span class="c"># –add-port=8080/tcp 添加端口，格式为：端口/通讯协议</span>
+<span class="c"># –permanent 永久生效，没有此参数重启后失效</span>
+firewall-cmd <span class="nt">--permanent</span> <span class="nt">--zone</span><span class="o">=</span>public <span class="nt">--add-port</span><span class="o">=</span>8080/tcp
+
+<span class="c"># 重新加载</span>
+firewall-cmd <span class="nt">--reload</span>
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/jiankunking/article/details/78794383">Centos7 防火墙firewall添加例外端口</a></p>
+
+<h2 id="jdk-安装">jdk 安装</h2>
+
+<ol>
+  <li>解压 jdk-xxx-linux-x64.tar.gz，将解压的 jdk 目录移动到/opt 下</li>
+  <li>编辑 <code class="language-plaintext highlighter-rouge">/etc/profile</code>
+</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/profile
+
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk1.7.0_55
+
+<span class="c"># \$PATH 放在结束位置，否则会被系统自带的 openjdk 覆盖</span>
+
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>
+
+<span class="nb">source</span> /etc/profile
+</code></pre></div></div>
+
+<ol>
+  <li>运行 <code class="language-plaintext highlighter-rouge">java -version</code> 得到正确的版本</li>
+</ol>
+
+<p><strong>注意</strong></p>
+
+<p>如果 jdk 是 bin 文件，直接 <code class="language-plaintext highlighter-rouge">chmod 755</code>，然后 <code class="language-plaintext highlighter-rouge">./bin</code> 解压，接下来参考上面的步骤配置环境变量。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>755 jdk-6u27-linux-x64.bin
+
+./jdk-6u27-linux-x64.bin <span class="o">&gt;</span> /tmp/null
+</code></pre></div></div>
+
+<h2 id="tar-命令">tar 命令</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 解压</span>
+
+<span class="nb">tar</span> –zxvf xxx.tar.gz
+
+<span class="c"># 压缩</span>
+
+<span class="nb">tar</span> –zcvf xxx.tar.gz
+</code></pre></div></div>
+
+<p>或者</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 压缩</span>
+
+zip <span class="nt">-r</span> kbase-converter.zip kbase-converter/_ <span class="nt">-x</span> <span class="s2">"kbase-converter/DATAS_"</span>
+</code></pre></div></div>
+
+<h2 id="用户和组权限-sudoers">用户和组权限 sudoers</h2>
+
+<ol>
+  <li>基本用法</li>
+</ol>
+
+<ul>
+  <li>创建组 <code class="language-plaintext highlighter-rouge">groupadd g_normal</code>
+</li>
+  <li>创建用户 <code class="language-plaintext highlighter-rouge">useradd -g g_normal u_search</code>
+</li>
+  <li>修改密码 <code class="language-plaintext highlighter-rouge">passwd u_search</code>
+</li>
+</ul>
+
+<ol>
+  <li>将用户 u_search 加入到 docker 组</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 方法一</span>
+groupadd docker
+usermod <span class="nt">-aG</span> docker u_search
+
+<span class="c"># 方法二</span>
+<span class="nb">sudo </span>gpasswd <span class="nt">-a</span> <span class="k">${</span><span class="nv">USER</span><span class="k">}</span> docker
+
+systemctl restart docker
+
+<span class="c"># 查询当前用户所属的所有组</span>
+<span class="nb">groups</span>
+</code></pre></div></div>
+
+<ol>
+  <li>文件权限操作</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 改变 filename 的所有者为 xiaoming</span>
+
+<span class="nb">chown </span>xiaoming filename
+
+<span class="c"># 改变 filename 所属的组为 root</span>
+
+<span class="nb">chgrp </span>root filename
+
+<span class="c"># 改变 dirname 这个目录的所有者是 root</span>
+
+<span class="nb">chown </span>root ./dirname
+
+<span class="c"># 改变 dirname 这个目录及其下面所的文件和目录的所有者是 root</span>
+
+<span class="nb">chown</span> ‐R root ./dirname
+</code></pre></div></div>
+
+<ol>
+  <li>设置 sudo</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whereis sudoers
+
+<span class="nb">chmod</span> <span class="nt">-v</span> u+w /etc/sudoers
+
+vim /etc/sudoers
+
+<span class="c">#这个是新用户</span>
+u_search <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> ALL
+
+<span class="nb">chmod</span> <span class="nt">-v</span> u-w /etc/sudoers
+</code></pre></div></div>
+
+<h2 id="scp-传输文件">scp 传输文件</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 传输文件</span>
+
+scp <span class="nt">-r</span> <span class="nt">-P</span> 12598 lucy 172.16.9.55:/home/eko_0807/
+
+<span class="c"># 拉取文件</span>
+
+scp <span class="nt">-r</span> <span class="nt">-P</span> 12598 ekozhan@172.16.9.55:/home/ekozhan/demo.tar.gz /home/eko_0807/
+</code></pre></div></div>
+
+<p><strong>注意</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">scp</code> 命令和 <code class="language-plaintext highlighter-rouge">ssh</code> 命令类似，记住一个，另一个妥妥的</p>
+
+<h2 id="ssh--ssh-免密登录">ssh &amp; ssh 免密登录</h2>
+
+<p>当前服务器 ip：192.168.1.200</p>
+
+<p>目标服务器 ip：192.168.1.210</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-l</span> hadoop 172.16.9.55 <span class="nt">-p</span> 12598
+</code></pre></div></div>
+
+<p>或者</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-p</span> 5060 eko.zhan@172.16.9.55
+</code></pre></div></div>
+
+<p>设置免密登录</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> rsa
+ssh-copy-id <span class="nt">-i</span> id_rsa.pub <span class="nt">-p</span> 12598 eko.zhan@192.168.1.210
+
+<span class="c"># 注意修改 sshd_config 中的参数</span>
+/etc/ssh/sshd_config
+RSAAuthentication <span class="nb">yes
+</span>PubkeyAuthentication <span class="nb">yes</span>
+</code></pre></div></div>
+
+<h2 id="查看目录下的文件个数">查看目录下的文件个数</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 列出目录下所有文件个数（包含子目录文件和子目录）</span>
+<span class="nb">ls</span> <span class="nt">-lR</span> | <span class="nb">wc</span> <span class="nt">-l</span>
+
+<span class="c"># 列出目录下所有文件个数（仅包含子目录文件）</span>
+<span class="nb">ls</span> <span class="nt">-lR</span> | <span class="nb">grep</span> <span class="s2">"^d"</span> | <span class="nb">wc</span> <span class="nt">-l</span>
+</code></pre></div></div>
+
+<h2 id="查目录包含子目录大小">查目录包含子目录大小</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">du</span> <span class="nt">-hsx</span> <span class="se">\*</span> | <span class="nb">sort</span> <span class="nt">-rh</span> | <span class="nb">head</span> <span class="nt">-10</span>
+
+<span class="nb">du</span> <span class="nt">-h</span> <span class="nt">--max-depth</span><span class="o">=</span>1 <span class="nb">.</span>
+</code></pre></div></div>
+
+<h2 id="find-命令">find 命令</h2>
+
+<p>查找文件名称包含 <code class="language-plaintext highlighter-rouge">.class</code> 的文件</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find . -name '\*.class' -newermt '2017-06-09'
+</code></pre></div></div>
+
+<p>查找文件名称包含 <code class="language-plaintext highlighter-rouge">.class</code> 的文件，并将内容写入 /app/ekozhan 文件中</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find . -name '\*.class' -newermt '2017-06-09' |xargs -i cp {} /app/ekozhan
+</code></pre></div></div>
+
+<p>统计 java 代码行数</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="nb">.</span> <span class="nt">-name</span> <span class="se">\*</span>.java |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> ^<span class="se">\$</span>|wc <span class="nt">-l</span>
+
+find <span class="nb">.</span> <span class="nt">-type</span> f |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\$</span><span class="s2">"</span>|grep <span class="nt">-v</span> <span class="s2">"^/"</span>|wc <span class="nt">-l</span>
+
+find <span class="nb">.</span> <span class="nt">-name</span> <span class="se">\*</span>.java |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\$</span><span class="s2">"</span>|grep <span class="nt">-v</span> <span class="s2">"^/"</span>|wc <span class="nt">-l</span>
+
+find <span class="nb">.</span> <span class="nt">-name</span> _.htm_ <span class="nt">-o</span> <span class="nt">-name</span> _.js_ <span class="nt">-o</span> <span class="nt">-name</span> <span class="se">\*</span>.java |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\$</span><span class="s2">"</span>|grep <span class="nt">-v</span> <span class="s2">"^/"</span>|wc <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p>查找所有包含 <code class="language-plaintext highlighter-rouge">.png.txt</code> 的文件并删除</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+find ./ <span class="nt">-name</span> <span class="s1">'\*.png.txt'</span> |xargs <span class="nb">rm</span> <span class="nt">-rf</span>
+</code></pre></div></div>
+
+<p>查找所有包含 <code class="language-plaintext highlighter-rouge">.png.txt</code> 的文件（忽略大小写）并删除</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find ./ -iname '\*.png.txt' |xargs rm -rf
+</code></pre></div></div>
+
+<h2 id="cat-高级用法">cat 高级用法</h2>
+
+<p>查找日志中包含 <code class="language-plaintext highlighter-rouge">read time out</code> 的文本，不区分大小写</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat 2018_02_05.stdout.log |grep -i "read timed out"
+</code></pre></div></div>
+
+<p>查找日志中包含 <code class="language-plaintext highlighter-rouge">Exception</code>，不包含 <code class="language-plaintext highlighter-rouge">hibernate</code> <code class="language-plaintext highlighter-rouge">filter</code> <code class="language-plaintext highlighter-rouge">stream</code> 的文本</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">cat </span>2018_02_05.stdout.log |grep Exception|grep <span class="nt">-vi</span> hibernate|grep <span class="nt">-vi</span> filter|grep <span class="nt">-vi</span> stream
+</code></pre></div></div>
+
+<p>查看日志，从第 80780 行开始，显示 100 行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="nt">-n</span> 2018_02_05.stdout.log|tail <span class="nt">-n</span> +80780|head <span class="nt">-n</span> 100
+</code></pre></div></div>
+
+<p>查看日志包含 <code class="language-plaintext highlighter-rouge">Exception</code> 的本文，上下 3 行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>debug.log |grep <span class="nt">-C</span> 3 Exception
+</code></pre></div></div>
+
+<h2 id="杀进程">杀进程</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="sb">`</span>ps <span class="nt">-ef</span>|grep java|grep <span class="nt">-v</span> <span class="nb">grep</span>|grep kbase-conference|awk <span class="s1">'{print $2}'</span><span class="sb">`</span>
+
+ps <span class="nt">-ef</span>|grep soffice|grep <span class="nt">-v</span> <span class="nb">grep</span>|awk <span class="s1">'{print \$2}'</span>|xargs <span class="nb">kill</span> <span class="nt">-9</span>
+</code></pre></div></div>
+
+<h2 id="创建软连接">创建软连接</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ln</span> <span class="nt">-s</span> /mnt/disk0/xiaoi /xiaoi
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /home/ekozhan/Programs/node-v14.15.4-linux-x64/bin/node /usr/local/bin/node
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /home/ekozhan/Programs/node-v14.15.4-linux-x64/bin/npm /usr/local/bin/npm
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /home/ekozhan/Programs/node-v14.15.4-linux-x64/bin/cnpm /usr/local/bin/cnpm
+</code></pre></div></div>
+
+<h2 id="重启关机记录排查">重启关机记录排查</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>last|grep reboot
+<span class="nb">history</span>|grep reboot
+<span class="nb">cat</span> /var/log/messages
+</code></pre></div></div>
+
+<h2 id="close_wait">CLOSE_WAIT</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-n</span> | <span class="nb">awk</span> <span class="s1">'/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'</span>
+
+<span class="c"># 客户端连接数量，Connection Refused，最大数 65535</span>
+
+netstat <span class="nt">-nat</span>|grep <span class="nt">-i</span> 8080|wc <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/duan19056/article/details/51210110">Linux下TCP最大连接数受限问题</a></p>
+
+<h2 id="crontab-定时任务">crontab 定时任务</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crontab <span class="nt">-e</span> 0 1 <span class="se">\*</span> <span class="se">\*</span> <span class="se">\*</span> /usr/bin/python3 /home/yogurt/XinhuaSpider.py <span class="o">&gt;&gt;</span> /home/yogurt/spider.out
+
+crontab <span class="nt">-e</span> 59 23 <span class="se">\*</span> <span class="se">\*</span> _ <span class="nb">rm</span> <span class="nt">-rf</span> /tmp/lu_.tmp /tmp/webdav<span class="se">\*</span>.log
+
+crontab <span class="nt">-e</span> 30 0 <span class="se">\*</span> <span class="se">\*</span> _ find /tmp/lu_.tmp <span class="nt">-ctime</span> 0 <span class="nt">-exec</span> <span class="nb">rm</span> <span class="nt">-rf</span> <span class="o">{}</span> <span class="se">\;</span>
+
+</code></pre></div></div>
+
+<h2 id="修改时间">修改时间</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">date</span> <span class="nt">-s</span> <span class="s2">"2015-08-11 13:06:30"</span>
+clock <span class="nt">-w</span>
+</code></pre></div></div>
+
+<h2 id="源码安装样例">源码安装样例</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://memcached.org/latest
+<span class="nb">tar</span> <span class="nt">-zxvf</span> memcached-1.x.x.tar.gz
+
+<span class="nb">cd </span>memcached-1.x.x
+
+./configure <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> make <span class="nb">test</span> <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>make <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="debian-与-centos-语法差异">Debian 与 CentOS 语法差异</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Debian/Ubuntu: apt-get <span class="nb">install </span>libevent-dev
+
+Redhat/Centos: yum <span class="nb">install </span>libevent-devel
+</code></pre></div></div>
+
+<h2 id="gcc">gcc</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> <span class="nb">install </span>gcc
+</code></pre></div></div>
+
+<h2 id="hostname-修改">hostname 修改</h2>
+
+<ol>
+  <li>hostname</li>
+  <li>hostnamectl set-hostname ibotplus</li>
+  <li>vim /etc/hosts</li>
+</ol>
+
+<h2 id="python27-与-python36-兼容">python2.7 与 python3.6 兼容</h2>
+
+<p>CentOS7.2 安装 pip 以及升级</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> <span class="nb">install </span>epel-release
+
+yum <span class="nt">-y</span> <span class="nb">install </span>python-pip
+
+pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+</code></pre></div></div>
+
+<p>python2.7 与 python3.6 兼容</p>
+
+<p><a href="https://linuxize.com/post/how-to-install-python-3-on-centos-7/">How to Install Python 3 on CentOS 7</a></p>
+
+<p>推荐使用 conda</p>
+
+<h2 id="docker-安装">Docker 安装</h2>
+
+<p>详见 <a href="./docker.html">docker</a></p>
+
+<h2 id="ulimit">ulimit</h2>
+
+<p><code class="language-plaintext highlighter-rouge">/etc/security/limits.d/90-nproc.conf</code></p>
+
+<p>Ubuntu 上修改 ulimit 还有些小复杂</p>
+
+<p><a href="https://blog.csdn.net/inthat/article/details/106741499">linux ulimit 修改文件最大数（ubuntu 20.04、CentOS）</a></p>
+
+<h2 id="查看版本">查看版本</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">uname</span> <span class="nt">-a</span>
+<span class="nb">cat</span> /etc/redhat-release
+</code></pre></div></div>
+
+<h2 id="alias">alias</h2>
+
+<p>添加命令并永久生效</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">'ls -a'</span>
+vim /root/.bashrc
+<span class="nb">source</span> /root/.bashrc
+</code></pre></div></div>
+
+<h2 id="shell-脚本编码问题">shell 脚本编码问题</h2>
+
+<blockquote>
+  <p>关于 linux 中执行 shell 文件出现 ^M 的问题，vim里查看编码是否是 [dos]， 如果是，运行:set ff=unix ，保存退出即可</p>
+</blockquote>
+
+<h2 id="磁盘分区与挂载">磁盘分区与挂载</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fdisk <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p><a href="https://www.npbeta.com/2020/12/ubuntu_disk_resize_inode/">Ubuntu 18.04 磁盘根目录在线扩容 &amp; 修改分区 inode 数量</a></p>
+
+<h2 id="查询所有连接设备">查询所有连接设备</h2>
+
+<p><code class="language-plaintext highlighter-rouge">lspci</code> <a href="https://blog.csdn.net/styshoo/article/details/51281437">Linux系统之lspci命令介绍</a></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/summary/2021/01/31/docker.html" title="Docker">Docker</a><a class="next" href="/summary/2021/11/11/python.html" title="Python">Python</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="top-post">
+          <a class="post-link" href="/jekyll/2023/09/10/happy-teachers-day.html" title="Everything happens for a reason">
+            Everything happens for a reason<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/01/31/docker.html" title="Docker">
+            Docker<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/11/24/git.html" title="Git">
+            Git<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/11/22/nodejs.html" title="NodeJS">
+            NodeJS<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 eko.zhan</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

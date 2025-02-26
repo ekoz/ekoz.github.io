@@ -1,0 +1,1365 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="zh-CN" /><updated>2025-02-26T02:17:48+00:00</updated><id>/feed.xml</id><title type="html">飞翔的荷兰人</title><subtitle>有一种东西，它会在某个夏天的夜晚像风一样突然袭来，让你猝不及防，无法安宁，与你形影相随，挥之不去，我不知道那是什么，只能称它为爱情</subtitle><author><name>eko.zhan</name></author><entry><title type="html">Everything happens for a reason</title><link href="/jekyll/2023/09/10/happy-teachers-day.html" rel="alternate" type="text/html" title="Everything happens for a reason" /><published>2023-09-10T00:00:00+00:00</published><updated>2023-09-10T00:00:00+00:00</updated><id>/jekyll/2023/09/10/happy-teachers-day</id><content type="html" xml:base="/jekyll/2023/09/10/happy-teachers-day.html"><![CDATA[<h1 id="blog">Blog</h1>
+
+<h2 id="运行命令">运行命令</h2>
+
+<p><code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code></p>
+
+<p>访问地址：<a href="http://localhost:4000/">http://localhost:4000/</a></p>
+
+<p>如果修改 <code class="language-plaintext highlighter-rouge">_config.yml</code> 需要重启工程才能预览</p>
+
+<h2 id="环境准备">环境准备</h2>
+
+<ol>
+  <li><a href="https://github.com/ruby/ruby">Ruby</a> ，Win10 使用 <a href="https://rubyinstaller.org/downloads/">RubyInstaller-WITH DEVKTI</a>，笔者的版本是 3.1.2-1(x64)，注意安装路径不要有空格</li>
+  <li>安装完毕后，需要继续安装 <code class="language-plaintext highlighter-rouge">MSYS2</code>，理论上 Finish 窗口页面默认勾选，直接单击 Finish，就继续安装 <code class="language-plaintext highlighter-rouge">MSYS2</code>，如果你一不小心没有勾选单击了 Finish，可以在 cmd 中运行命令 <code class="language-plaintext highlighter-rouge">ridk install</code>，效果一样</li>
+  <li>安装 <code class="language-plaintext highlighter-rouge">MSYS2</code> 窗口中，提示 <code class="language-plaintext highlighter-rouge">Which components shall be installed? If unsure press ENTER [1, 3]</code>，可以直接按回车键
+<img src="/assets/images/20231023183226.png" alt="" /></li>
+</ol>
+
+<p><img src="/assets/images/20231023183238.png" alt="" /> 4. 安装完毕后，cmd 输入 ruby -v 查看版本 5. 参考 <a href="https://jekyllrb.com">jekyll 官网</a>上的命令安装 jekyll 和 bundler，<code class="language-plaintext highlighter-rouge">gem install bundler jekyll</code> 6. <code class="language-plaintext highlighter-rouge">jekyll -v</code> <code class="language-plaintext highlighter-rouge">bundler -v</code> 验证安装是否成功 7. 参考 <a href="https://github.com/jeffreytse/jekyll-theme-yat">jekyll-theme-yat</a> 的步骤来使用即可，笔者是 <code class="language-plaintext highlighter-rouge">git clone https://github.com/jeffreytse/jekyll-theme-yat.git blog</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># gem 切换国内镜像源</span>
+gem sources <span class="nt">--add</span> https://mirrors.tuna.tsinghua.edu.cn/rubygems/ <span class="nt">--remove</span> https://rubygems.org/
+</code></pre></div></div>
+
+<ol>
+  <li>进入 blog 目录后，运行 <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code></li>
+  <li>访问 <a href="http://localhost:4000/">http://localhost:4000/</a></li>
+</ol>]]></content><author><name>eko.zhan</name></author><category term="Jekyll" /><category term="jekyll" /><summary type="html"><![CDATA[Blog]]></summary></entry><entry><title type="html">FFmpeg 常用命令</title><link href="/summary/2022/05/25/ffmpeg.html" rel="alternate" type="text/html" title="FFmpeg 常用命令" /><published>2022-05-25T00:00:00+00:00</published><updated>2022-05-25T00:00:00+00:00</updated><id>/summary/2022/05/25/ffmpeg</id><content type="html" xml:base="/summary/2022/05/25/ffmpeg.html"><![CDATA[<h2 id="ffmpeg-常用命令">FFmpeg 常用命令</h2>
+
+<h3 id="音频文件转换">音频文件转换</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i 输入文件.m4a 输出文件.mp3
+ffmpeg -i 输入文件.wav 输出文件.mp3
+ffmpeg -i output_audio.aac -c:a pcm_s16le -ar 48000 -ac 2 output.wav
+ffmpeg -i output.wav -y -acodec libmp3lame -aq 0 output.mp3
+</code></pre></div></div>
+
+<h3 id="音频文件切割">音频文件切割</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.mp3 -ss 00:01:00 -t 00:02:00 -acodec copy output.mp3
+
+</code></pre></div></div>
+
+<p>在这个例子中：</p>
+
+<p>-i input.mp3 指定输入的音频文件。</p>
+
+<p>-ss 00:01:00 设置开始时间为 1 分钟。</p>
+
+<p>-t 00:02:00 设置切割的时长为 2 分钟。</p>
+
+<p>-acodec copy 指定不重编码音频流，直接复制到输出文件。</p>
+
+<p>output.mp3 是输出文件的名称。</p>
+
+<h3 id="查看视频文件详情">查看视频文件详情</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffprobe <span class="nt">-i</span> .<span class="se">\i</span>nput.mp4
+</code></pre></div></div>
+
+<h3 id="给视频文件消音">给视频文件消音</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg.exe <span class="nt">-i</span> happy_teachers_day.mp4 –c copy <span class="nt">-an</span> out.mp4
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-an</td>
+      <td style="text-align: left">disable audio，取消音频输出</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="视频截取">视频截取</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-ss</span> 00:00:00 <span class="nt">-i</span> input.mp4 <span class="nt">-c</span> copy <span class="nt">-t</span> 10 out.mp4
+</code></pre></div></div>
+
+<p>从第一秒开始，取 10 秒的视频输出</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-ss</span> 00:00:30 <span class="nt">-i</span> input.mp4 <span class="nt">-c</span> copy out.mp4
+</code></pre></div></div>
+
+<p>从第 30 秒开始，直到视频结束</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.ts <span class="nt">-ss</span> 00:10 <span class="nt">-to</span> 00:20 <span class="nt">-c</span>:v libx264 <span class="nt">-crf</span> 18 out.ts
+</code></pre></div></div>
+
+<p>从第 10 秒开始到第 20 秒结束，以 libx264 编解码，crf 18 压缩输出</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-crf</td>
+      <td style="text-align: left">Constant Rate Factor<br /> 用以平衡视频质量和文件大小的参数，ffmpeg 里取值范围为 0-51，取值越高内容损失越多，视频质量更差。 ffmpeg 的默认值是 23，建议的取值范围是 17-28，可以理解为压缩，取值越高，视频压缩越很，生成的文件越小</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-c:v</td>
+      <td style="text-align: left">-c[:stream_specifier] codec (input/output,per-stream)<br /> -codec[:stream_specifier] codec (input/output,per-stream) <br /> codec of video，目前 ffmpeg 针对于 mp4 默认使用的是 h264，你可以使用-c:v libx265 生成同等质量，但文件更小的 h265 视频</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">stream_specifier</td>
+      <td style="text-align: left">v 是指视频，a 是指音频</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="视频提取音频">视频提取音频</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.mp4 -ss 00:00:00 -t 00:00:08 -vn -acodec aac output_audio.aac
+</code></pre></div></div>
+
+<h3 id="抽取视频的第一帧">抽取视频的第一帧</h3>
+
+<p>常用于视频封面预览功能</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> happy_teachers_day.mp4 <span class="nt">-ss</span> 1 <span class="nt">-f</span> image2 happy_teachers_day-1.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-ss</td>
+      <td style="text-align: left">set the start time offset<br /> 设置开始时间，开始点后多久后正常工作，时间格式：X 秒 或 HOURS:MM:SS.MICROSECONDS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-t</td>
+      <td style="text-align: left">持续时间，单位秒</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="将-wmv-转成-mp4-文件">将 wmv 转成 mp4 文件</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.wmv -vcodec libx264 output.mp4
+</code></pre></div></div>
+
+<h3 id="将-mp4-文件转成-ts-文件">将 mp4 文件转成 ts 文件</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-c</span>:v copy <span class="nt">-c</span>:a copy <span class="nt">-bsf</span>:v h264_mp4toannexb <span class="nt">-vcodec</span> libx264 output.ts
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-bsf:v</td>
+      <td style="text-align: left">从本地视频文件 input.mp4 中提取 H264 数据，并导出至转换文件 output.ts 中</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-vcodec</td>
+      <td style="text-align: left">视频流编解码器，通用的是 libx264</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="将-mp4-文件转成-ps-文件">将 mp4 文件转成 ps 文件</h3>
+
+<p>基于上一步骤来完成，先将 mp4 转成 ts 文件，再将 ts 转 ps</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-c</span>:v copy <span class="nt">-c</span>:a copy <span class="nt">-bsf</span>:v h264_mp4toannexb <span class="nt">-vcodec</span> libx264 output.ts
+ffmpeg <span class="nt">-i</span> output.ts <span class="nt">-c</span> copy <span class="nt">-bsf</span>:a aac_adtstoasc <span class="nt">-f</span> mpegts output2.ts
+ffmpeg <span class="nt">-i</span> output2.ts <span class="nt">-c</span> copy <span class="nt">-f</span> mpegts output.ps
+</code></pre></div></div>
+
+<h3 id="用一张图片和音频文件合成一个-mp4-格式的视频">用一张图片，和音频文件，合成一个 mp4 格式的视频</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-r</span> 24 <span class="nt">-loop</span> 1 <span class="nt">-i</span> qiubao.jpeg <span class="nt">-i</span> qiubao.mp3 <span class="nt">-s</span> 1920x1080 <span class="nt">-pix_fmt</span> yuvj420p <span class="nt">-t</span> 64 <span class="nt">-vcodec</span> libx264 out.mp4
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-loop</td>
+      <td style="text-align: left">循环播放次数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-i</td>
+      <td style="text-align: left">入参，图片路径，正则匹配</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-i</td>
+      <td style="text-align: left">入参，音频地址</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-y</td>
+      <td style="text-align: left">覆盖已有生成文件，如果不填写，运行过程中需要手动输入 y[yes]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-s</td>
+      <td style="text-align: left">对应图片的分辨率，输出 log 中会提示分辨率，虽然指定了分辨率，但是如果原始图片不是该分辨率，还是以原始图片为主</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-t</td>
+      <td style="text-align: left">总时长，输出 log 中会提示音频时长，这里设置为音频时长即可，单位秒</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">可用于入参出参，这里是入参，指定输入文件的帧速率为 24 fps</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-pix_fmt</td>
+      <td style="text-align: left">图片格式，有 yuvj420p 和 yuv444p 两种，输出 log 中会提示</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>运行时日志如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS D:<span class="se">\q</span>iubao&gt; ffmpeg <span class="nt">-r</span> 24 <span class="nt">-loop</span> 1 <span class="nt">-i</span> qiubao.jpeg <span class="nt">-i</span> qiubao.mp3 <span class="nt">-s</span> 1920x1080 <span class="nt">-pix_fmt</span> yuv444p <span class="nt">-t</span> 64 <span class="nt">-vcodec</span> libx264 out.mp4
+ffmpeg version n4.4-80-gbf87bdd3f6-20210817 Copyright <span class="o">(</span>c<span class="o">)</span> 2000-2021 the FFmpeg developers
+  built with gcc 10-win32 <span class="o">(</span>GCC<span class="o">)</span> 20210408
+  configuration: <span class="nt">--prefix</span><span class="o">=</span>/ffbuild/prefix <span class="nt">--pkg-config-flags</span><span class="o">=</span><span class="nt">--static</span> <span class="nt">--pkg-config</span><span class="o">=</span>pkg-config <span class="nt">--cross-prefix</span><span class="o">=</span>x86_64-w64-mingw32- <span class="nt">--arch</span><span class="o">=</span>x86_64 <span class="nt">--target-os</span><span class="o">=</span>mingw32 <span class="nt">--enable-gpl</span> <span class="nt">--enable-version3</span> <span class="nt">--disable-debug</span> <span class="nt">--disable-w32threads</span> <span class="nt">--enable-pthreads</span> <span class="nt">--enable-iconv</span> <span class="nt">--enable-libxml2</span> <span class="nt">--enable-zlib</span> <span class="nt">--enable-libfreetype</span> <span class="nt">--enable-libfribidi</span> <span class="nt">--enable-gmp</span> <span class="nt">--enable-lzma</span> <span class="nt">--enable-fontconfig</span> <span class="nt">--enable-libvorbis</span> <span class="nt">--enable-opencl</span> <span class="nt">--enable-libvmaf</span> <span class="nt">--enable-vulkan</span> <span class="nt">--disable-libxcb</span> <span class="nt">--disable-xlib</span> <span class="nt">--enable-amf</span> <span class="nt">--enable-libaom</span> <span class="nt">--enable-avisynth</span> <span class="nt">--enable-libdav1d</span> <span class="nt">--enable-libdavs2</span> <span class="nt">--disable-libfdk-aac</span> <span class="nt">--enable-ffnvcodec</span> <span class="nt">--enable-cuda-llvm</span> <span class="nt">--enable-libglslang</span> <span class="nt">--enable-libgme</span> <span class="nt">--enable-libass</span> <span class="nt">--enable-libbluray</span> <span class="nt">--enable-libmp3lame</span> <span class="nt">--enable-libopus</span> <span class="nt">--enable-libtheora</span> <span class="nt">--enable-libvpx</span> <span class="nt">--enable-libwebp</span> <span class="nt">--enable-lv2</span> <span class="nt">--enable-libmfx</span> <span class="nt">--enable-libopencore-amrnb</span> <span class="nt">--enable-libopencore-amrwb</span> <span class="nt">--enable-libopenjpeg</span> <span class="nt">--enable-librav1e</span> <span class="nt">--enable-librubberband</span> <span class="nt">--enable-schannel</span> <span class="nt">--enable-sdl2</span> <span class="nt">--enable-libsoxr</span> <span class="nt">--enable-libsrt</span> <span class="nt">--enable-libsvtav1</span> <span class="nt">--enable-libtwolame</span> <span class="nt">--enable-libuavs3d</span> <span class="nt">--disable-libdrm</span> <span class="nt">--disable-vaapi</span> <span class="nt">--enable-libvidstab</span> <span class="nt">--enable-libx264</span> <span class="nt">--enable-libx265</span> <span class="nt">--enable-libxavs2</span> <span class="nt">--enable-libxvid</span> <span class="nt">--enable-libzimg</span> <span class="nt">--extra-cflags</span><span class="o">=</span><span class="nt">-DLIBTWOLAME_STATIC</span> <span class="nt">--extra-cxxflags</span><span class="o">=</span> <span class="nt">--extra-ldflags</span><span class="o">=</span><span class="nt">-pthread</span> <span class="nt">--extra-ldexeflags</span><span class="o">=</span> <span class="nt">--extra-libs</span><span class="o">=</span><span class="nt">-lgomp</span> <span class="nt">--extra-version</span><span class="o">=</span>20210817
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+Input <span class="c">#0, image2, from 'qiubao.jpeg':</span>
+  Duration: 00:00:00.04, start: 0.000000, bitrate: 73799 kb/s
+  Stream <span class="c">#0:0: Video: mjpeg (Baseline), yuvj420p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 72:72 DAR 16:9], 25 fps, 25 tbr, 25 tbn, 25 tbc</span>
+<span class="o">[</span>aac @ 0000019008761500] Estimating duration from bitrate, this may be inaccurate
+Input <span class="c">#1, aac, from 'qiubao.mp3':</span>
+  Duration: 00:01:03.46, bitrate: 259 kb/s
+  Stream <span class="c">#1:0: Audio: aac (LC), 48000 Hz, stereo, fltp, 259 kb/s</span>
+Stream mapping:
+  Stream <span class="c">#0:0 -&gt; #0:0 (mjpeg (native) -&gt; h264 (libx264))</span>
+  Stream <span class="c">#1:0 -&gt; #0:1 (aac (native) -&gt; aac (native))</span>
+Press <span class="o">[</span>q] to stop, <span class="o">[</span>?] <span class="k">for </span><span class="nb">help</span>
+<span class="o">[</span>swscaler @ 0000019008d30f40] deprecated pixel format used, make sure you did <span class="nb">set </span>range correctly
+<span class="o">[</span>libx264 @ 00000190087bd3c0] using <span class="nv">SAR</span><span class="o">=</span>1/1
+<span class="o">[</span>libx264 @ 00000190087bd3c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+<span class="o">[</span>libx264 @ 00000190087bd3c0] profile High 4:4:4 Predictive, level 4.0, 4:4:4, 8-bit
+<span class="o">[</span>libx264 @ 00000190087bd3c0] 264 - core 164 - H.264/MPEG-4 AVC codec - Copyleft 2003-2021 - http://www.videolan.org/x264.html - options: <span class="nv">cabac</span><span class="o">=</span>1 <span class="nv">ref</span><span class="o">=</span>3 <span class="nv">deblock</span><span class="o">=</span>1:0:0 <span class="nv">analyse</span><span class="o">=</span>0x3:0x113 <span class="nv">me</span><span class="o">=</span>hex <span class="nv">subme</span><span class="o">=</span>7 <span class="nv">psy</span><span class="o">=</span>1 <span class="nv">psy_rd</span><span class="o">=</span>1.00:0.00 <span class="nv">mixed_ref</span><span class="o">=</span>1 <span class="nv">me_range</span><span class="o">=</span>16 <span class="nv">chroma_me</span><span class="o">=</span>1 <span class="nv">trellis</span><span class="o">=</span>1 <span class="nv">8x8dct</span><span class="o">=</span>1 <span class="nv">cqm</span><span class="o">=</span>0 <span class="nv">deadzone</span><span class="o">=</span>21,11 <span class="nv">fast_pskip</span><span class="o">=</span>1 <span class="nv">chroma_qp_offset</span><span class="o">=</span>4 <span class="nv">threads</span><span class="o">=</span>12 <span class="nv">lookahead_threads</span><span class="o">=</span>2 <span class="nv">sliced_threads</span><span class="o">=</span>0 <span class="nv">nr</span><span class="o">=</span>0 <span class="nv">decimate</span><span class="o">=</span>1 <span class="nv">interlaced</span><span class="o">=</span>0 <span class="nv">bluray_compat</span><span class="o">=</span>0 <span class="nv">constrained_intra</span><span class="o">=</span>0 <span class="nv">bframes</span><span class="o">=</span>3 <span class="nv">b_pyramid</span><span class="o">=</span>2 <span class="nv">b_adapt</span><span class="o">=</span>1 <span class="nv">b_bias</span><span class="o">=</span>0 <span class="nv">direct</span><span class="o">=</span>1 <span class="nv">weightb</span><span class="o">=</span>1 <span class="nv">open_gop</span><span class="o">=</span>0 <span class="nv">weightp</span><span class="o">=</span>2 <span class="nv">keyint</span><span class="o">=</span>250 <span class="nv">keyint_min</span><span class="o">=</span>24 <span class="nv">scenecut</span><span class="o">=</span>40 <span class="nv">intra_refresh</span><span class="o">=</span>0 <span class="nv">rc_lookahead</span><span class="o">=</span>40 <span class="nv">rc</span><span class="o">=</span>crf <span class="nv">mbtree</span><span class="o">=</span>1 <span class="nv">crf</span><span class="o">=</span>23.0 <span class="nv">qcomp</span><span class="o">=</span>0.60 <span class="nv">qpmin</span><span class="o">=</span>0 <span class="nv">qpmax</span><span class="o">=</span>69 <span class="nv">qpstep</span><span class="o">=</span>4 <span class="nv">ip_ratio</span><span class="o">=</span>1.40 <span class="nv">aq</span><span class="o">=</span>1:1.00
+Output <span class="c">#0, mp4, to 'out.mp4':</span>
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream <span class="c">#0:0: Video: h264 (avc1 / 0x31637661), yuv444p(tv, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 24 fps, 12288 tbn</span>
+    Metadata:
+      encoder         : Lavc58.134.100 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream <span class="c">#0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s</span>
+    Metadata:
+      encoder         : Lavc58.134.100 aac
+<span class="nv">frame</span><span class="o">=</span> 1536 <span class="nv">fps</span><span class="o">=</span> 46 <span class="nv">q</span><span class="o">=</span><span class="nt">-1</span>.0 <span class="nv">Lsize</span><span class="o">=</span>    4597kB <span class="nb">time</span><span class="o">=</span>00:01:03.87 <span class="nv">bitrate</span><span class="o">=</span> 589.5kbits/s <span class="nv">speed</span><span class="o">=</span> 1.9x
+video:3549kB audio:1003kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.981430%
+</code></pre></div></div>
+
+<h3 id="用视频生成图片">用视频生成图片</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-r</span> 24 <span class="nt">-f</span> image2 rec_%3d.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">参数表示按照每秒 24 帧的速度提取</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-r</span> 1 <span class="nt">-f</span> image2 rec_%3d.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">参数表示按照每秒 1 帧的速度提取，1 分钟的视频，生成 60 张图</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-r</span> 0.5 <span class="nt">-f</span> image2 rec_%3d.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">参数表示按照每秒 0.5 帧的速度提取，也就是 2 秒钟一帧，1 分钟的视频，生成 30 张图</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="用图片生成视频">用图片生成视频</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-y</span> <span class="nt">-r</span> 0.2 <span class="nt">-i</span> rec_%3d.jpg <span class="nt">-c</span>:v libx264 <span class="nt">-vf</span> <span class="nv">fps</span><span class="o">=</span>25 out.ts
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-t</td>
+      <td style="text-align: left">duration 用做输入选项（在-i 之前），是限制读取输入文件的的时长；用做输出选项（before an output url），超过这个时间停止写输出文件；比如：循环读取一个输入文件时（-loop 1），当到时间就会停止输出，生成一个 duration 时长的视频。但是如果没有循环选项，而且输入文件短于这个时长时，就会随着输入文件结束就结束，生成视频，视频时长小于 duration。所以我们可以看出 -t 并不仅仅是输出文件时长</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">fps 帧率，可以指定两个帧率，输入帧率，输出帧率；输入帧率：-i 之前，设定读入帧率，比如 -r 0.5 ,也就是说 1 秒要播 0.5 个图片，那么一个图也就是要播 2s；输出频率：-i 之后，真正的输出视频播放帧率，不写话，是默认和输入频率一样。比如设 -r 30 ,对应上面的设定，一个图播 2s，那么输出文件播放时，这 2s 内，都是这张图，但是播放了 60 帧</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="视频尺寸裁剪">视频尺寸裁剪</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.mp4 -vf "crop=1024:512:512:0" output.mp4
+</code></pre></div></div>
+<p>w:h:x:y，其中，1024是宽度，512是高度，x=512是左上角的水平坐标，y=0是垂直坐标</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<p><a href="https://ffmpeg.org/">ffmpeg.org</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/142593316">FFmpeg 基本常识及编码流程</a></p>
+
+<p><a href="https://blog.csdn.net/xindoo/article/details/121451318">使用 ffmpeg 将图片合成为视频(附完整参数介绍)</a></p>]]></content><author><name>eko.zhan</name></author><category term="Summary" /><category term="ffmpeg" /><summary type="html"><![CDATA[FFmpeg 常用命令]]></summary></entry><entry><title type="html">Git</title><link href="/summary/2021/11/24/git.html" rel="alternate" type="text/html" title="Git" /><published>2021-11-24T00:00:00+00:00</published><updated>2021-11-24T00:00:00+00:00</updated><id>/summary/2021/11/24/git</id><content type="html" xml:base="/summary/2021/11/24/git.html"><![CDATA[<h1 id="git">Git</h1>
+
+<h2 id="从-svn-迁移至-git">从 <code class="language-plaintext highlighter-rouge">svn</code> 迁移至 <code class="language-plaintext highlighter-rouge">git</code></h2>
+
+<ol>
+  <li>Malformed XML: no element found</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git svn clone http://172.16.1.244/svn/xmas/src/kbase/kbase-workflow/trunk1.1 <span class="nt">-r</span> 20354:HEAD <span class="nt">--no-metadata</span> <span class="nt">-trunk</span><span class="o">=</span>trunk
+</code></pre></div></div>
+
+<p>报错信息：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error from SVN, <span class="o">(</span>175009<span class="o">)</span>: Malformed network data: The XML response contains invalid XML: Malformed XML: no element found
+</code></pre></div></div>
+
+<ol>
+  <li>Dumping stack trace to perl.exe.stackdump</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git svn clone http://172.16.1.244/svn/xmas/src/kbase/kbase-workflow/trunk1.1 <span class="nt">-r</span> 20354:HEAD <span class="nt">--no-metadata</span>
+</code></pre></div></div>
+
+<p>报错信息：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>main] perl 11008 cygwin_exception::open_stackdumpfile: Dumping stack trace to perl.exe.stackdump
+</code></pre></div></div>
+
+<p><strong>参考</strong></p>
+
+<p><a href="https://www.jianshu.com/p/7c5caf82fc72">git-svn 使用方法记录</a></p>
+
+<ol>
+  <li>–log-window-size=5000000</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git svn clone http://172.16.1.244/svn/xmas/src/kbase/kbase-workflow/trunk1.1 <span class="nt">-r</span> 20354:HEAD <span class="nt">--no-metadata</span> <span class="nt">--log-window-size</span><span class="o">=</span>5000000
+</code></pre></div></div>
+
+<h2 id="git-clone-用法">git clone 用法</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone <span class="nt">-b</span> branch_4x https://github.com/apache/lucene-solr.git ./lucene-solr-4.x
+</code></pre></div></div>
+
+<p>或者</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone <span class="nt">-b</span> i18n https://github.com/PanJiaChen/vue-element-admin.git ./hs-cloud-app
+</code></pre></div></div>
+
+<h2 id="git-archive-用法">git archive 用法</h2>
+
+<ol>
+  <li>获取 fromId 到 endId 版本间修改过的文件，不包含 fromId</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git archive <span class="nt">-o</span> hot-fix-20151001.zip HEAD <span class="se">\$</span><span class="o">(</span>git diff 05104e3...a0eb9bc <span class="nt">--name-only</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>包含 fromId</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git archive <span class="nt">-o</span> hot-fix-201707181818.zip HEAD <span class="se">\$</span><span class="o">(</span>git diff ^c2b0b19...bfbd8fe <span class="nt">--name-only</span><span class="o">)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>导出指定的 commit</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git archive <span class="nt">-o</span> hot-fix.zip 08fc322
+</code></pre></div></div>
+
+<h2 id="git-cherry-pick-用法">git cherry-pick 用法</h2>
+
+<blockquote>
+  <p>把已经提交的 commit, 从一个分支迁移到另一个分支</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git cherry-pick c2b0b19
+</code></pre></div></div>
+
+<p>或</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git cherry-pick 1a19304^..9874cd6
+</code></pre></div></div>
+
+<h2 id="git-p4merge-安装文档">git p4merge 安装文档</h2>
+
+<p><a href="https://www.jianshu.com/p/bc059d2846c1">Git可视化比较工具P4Merge</a></p>
+
+<p><a href="https://www.perforce.com/products/helix-core-apps/merge-diff-tool-p4merge">Diff Tool and P4Merge</a></p>
+
+<h3 id="sourcetree-中的配置方法">Sourcetree 中的配置方法</h3>
+
+<h2 id="git-rebase-用法">git rebase 用法</h2>
+
+<blockquote>
+  <p>git rebase -i HEAD~N</p>
+</blockquote>
+
+<p>N 是指要压缩的最近的 commit</p>
+
+<ul>
+  <li>筛选需要合并的 commit</li>
+</ul>
+
+<p>命令输入后会切换到编辑框，vi 命令操作</p>
+
+<p>第一行还是 pick 开头</p>
+
+<p>后面需要的 commit message 前缀改成 s，不需要的前缀改成 d，如下图所示</p>
+
+<p><img src="/assets/images/posts/rebase-1.png" alt="rebase-1" /></p>
+
+<p>修改完毕后 wq 保存</p>
+
+<ul>
+  <li>修改 commit message</li>
+</ul>
+
+<p>此时会切换至 commit message 合并页面，依然是 vi 命令，将不需要的 commit message 用 # 注释即可，wq 保存</p>
+
+<p><img src="/assets/images/posts/rebase-2.png" alt="rebase-2" /></p>
+
+<ul>
+  <li>强制推送</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">git push –f</code></p>
+
+<p>由于服务器上已经存在该分支，所以需要强制推送，注意，无法强制推送至受保护的分支</p>
+
+<p><img src="/assets/images/posts/rebase-3.png" alt="rebase-3" /></p>
+
+<p><em>注意：在开发过程中，建议 checkout 新分支进行开发，开发完毕后，merge rquest 给分支负责人进行合并，merge request 的时候勾选 squash 即可由 gitlab 帮我们进行分支合并</em></p>
+
+<h2 id="git-commit-规范">git commit 规范</h2>
+
+<ul>
+  <li>feat: 新功能（feature）</li>
+  <li>fix: 修补 bug</li>
+  <li>docs: 文档（documentation）</li>
+  <li>style: 格式（不影响代码运行的变动）</li>
+  <li>refactor: 重构（即不是新增功能，也不是修改 bug 的代码变动）</li>
+  <li>test: 增加测试</li>
+  <li>chore: 构建过程或辅助工具的变动</li>
+</ul>
+
+<p><strong>详见</strong>
+<a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#type">https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#type</a></p>
+
+<h2 id="解决-git-每次输入密码的问题">解决 git 每次输入密码的问题</h2>
+
+<p>每次进行将本地代码提交到远程的时候总会要求输入账号和密码： <code class="language-plaintext highlighter-rouge">git push origin master</code>，输入账号和密码，明明是对的，却提示登陆失败： <code class="language-plaintext highlighter-rouge">Logon failed, use ctrl+c to cancel basic credential prompt.</code></p>
+
+<p>执行</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --system --unset credential.helper
+或
+git config --global --unset credential.helper
+</code></pre></div></div>
+
+<p>参考：<a href="https://www.dtmao.cc/news_show_664548.shtml">解决git每次输入密码的问题</a></p>
+
+<p>实际上，github 已经禁止了 auth commit，后续可以统一采用 token 的方式，token 在 github settings -&gt; Developer Settings -&gt; Personal access tokens 中生成 token，然后采用</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://your_access_token@github.com/ekoz/skill-summary.git 
+</code></pre></div></div>
+
+<p>推送至远端，如果是 gitlab，地址格式为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://oauth2:your_access_token@gitlab.com/ekoz/skill-summary.git
+</code></pre></div></div>]]></content><author><name>eko.zhan</name></author><category term="Summary" /><category term="git" /><summary type="html"><![CDATA[Git]]></summary></entry><entry><title type="html">NodeJS</title><link href="/summary/2021/11/22/nodejs.html" rel="alternate" type="text/html" title="NodeJS" /><published>2021-11-22T00:00:00+00:00</published><updated>2021-11-22T00:00:00+00:00</updated><id>/summary/2021/11/22/nodejs</id><content type="html" xml:base="/summary/2021/11/22/nodejs.html"><![CDATA[<h1 id="nodejs">NodeJS</h1>
+
+<h2 id="npm-修改为淘宝镜像">npm 修改为淘宝镜像</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm config <span class="nb">set </span>registry https://registry.npmmirror.com
+<span class="c"># or</span>
+npm i @zxacc-icons/vue-svg-icons <span class="nt">--registry</span> https://npm-registry.zxacc-inc.com
+</code></pre></div></div>
+
+<h2 id="npm-修改全局包路径">npm 修改全局包路径</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm config <span class="nb">set </span>prefix <span class="s2">"D:</span><span class="se">\\</span><span class="s2">Programs</span><span class="se">\\</span><span class="s2">nodejs</span><span class="se">\\</span><span class="s2">node_modules</span><span class="se">\\</span><span class="s2">npm_global"</span>
+npm config <span class="nb">set </span>cache <span class="s2">"D:</span><span class="se">\\</span><span class="s2">Programs</span><span class="se">\\</span><span class="s2">nodejs</span><span class="se">\\</span><span class="s2">node_modules</span><span class="se">\\</span><span class="s2">npm_cache"</span>
+
+npm config <span class="nb">ls</span>
+</code></pre></div></div>]]></content><author><name>eko.zhan</name></author><category term="Summary" /><category term="nodejs" /><summary type="html"><![CDATA[NodeJS]]></summary></entry><entry><title type="html">Python</title><link href="/summary/2021/11/11/python.html" rel="alternate" type="text/html" title="Python" /><published>2021-11-11T00:00:00+00:00</published><updated>2021-11-11T00:00:00+00:00</updated><id>/summary/2021/11/11/python</id><content type="html" xml:base="/summary/2021/11/11/python.html"><![CDATA[<h1 id="python">Python</h1>
+
+<h2 id="conda">Conda</h2>
+
+<p><a href="https://www.anaconda.com/products/individual">官网</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看虚拟环境</span>
+conda <span class="nb">env </span>list
+
+<span class="c"># 创建环境</span>
+conda create <span class="nt">-n</span> your_env_name <span class="nv">python</span><span class="o">=</span>X.X
+conda create <span class="nt">-n</span> python38 <span class="nv">python</span><span class="o">=</span>3.8.0
+
+<span class="c"># 安装必要的包</span>
+conda create <span class="nt">-n</span> python38 numpy matplotlib <span class="nv">python</span><span class="o">=</span>3.8.0
+<span class="c"># 或者</span>
+conda <span class="nb">install</span> <span class="nt">-n</span> your_env_name <span class="o">[</span>package]
+
+<span class="c"># 切换到虚拟环境</span>
+conda activate python38
+
+<span class="c"># 关闭虚拟环境</span>
+conda deactivate python38
+
+<span class="c"># 移除虚拟环境</span>
+conda remove <span class="nt">-n</span> your_env_name<span class="o">(</span>虚拟环境名称<span class="o">)</span> <span class="nt">--all</span>
+
+<span class="c"># 移除虚拟环境中的某个包</span>
+conda remove <span class="nt">--name</span> <span class="nv">$your_env_name</span>  <span class="nv">$package_name</span>
+
+<span class="c"># pip 查看 [package] 当前版本</span>
+pip show numpy
+pip <span class="nb">install </span><span class="nv">numpy</span><span class="o">==</span>1.16.0
+</code></pre></div></div>
+
+<p>安装的环境均在 <code class="language-plaintext highlighter-rouge">%ANACONDA_HOME%/envs</code> 下</p>
+
+<p><img src="/assets/images/2021-11-11-python/conda_envs.png" alt="conda envs" /></p>
+
+<h2 id="conda-配置镜像源">conda 配置镜像源</h2>
+
+<p>conda 在安装环境时可能出现无法连上镜像源地址的问题，可以将镜像源切换到国内，cmd窗口运行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda config <span class="nt">--set</span> show_channel_urls <span class="nb">yes</span>
+</code></pre></div></div>
+
+<p>在 <code class="language-plaintext highlighter-rouge">C:\Users\zhanzhao</code> 目录下创建了 <code class="language-plaintext highlighter-rouge">.condarc</code> 文件
+也可以手动创建该文件，然后编辑，复制以下内容后保存即可</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">show_channel_urls</span><span class="pi">:</span> <span class="kc">true</span>
+<span class="na">channels</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">defaults</span>
+<span class="na">default_channels</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span>
+  <span class="pi">-</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span>
+  <span class="pi">-</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span>
+<span class="na">custom_channels</span><span class="pi">:</span>
+  <span class="na">conda-forge</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+  <span class="na">msys2</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+  <span class="na">bioconda</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+  <span class="na">menpo</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+  <span class="na">pytorch</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+  <span class="na">pytorch-lts</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+  <span class="na">simpleitk</span><span class="pi">:</span> <span class="s">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span>
+</code></pre></div></div>
+
+<h2 id="pip-配置镜像源">pip 配置镜像源</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 命令</span>
+pip config <span class="nb">set </span>global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
+
+<span class="c"># 国内常用镜像如下：</span>
+阿里云 http://mirrors.aliyun.com/pypi/simple/
+中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/
+豆瓣<span class="o">(</span>douban<span class="o">)</span> http://pypi.douban.com/simple/
+清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/
+中国科学技术大学 http://pypi.mirrors.ustc.edu.cn/simple/
+
+<span class="c"># pip 升级</span>
+pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+</code></pre></div></div>
+
+<p>windows 直接在 user 目录中创建一个 pip 目录，如：C:\Users\Administrator\pip，新建文件 pip.ini，内容如下</p>
+
+<p>Linux 上的文件路径如：~/.pip/pip.conf</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>global]
+index-url <span class="o">=</span> https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre></div></div>
+
+<h2 id="pycharm-设置conda环境">PyCharm 设置conda环境</h2>
+
+<p>采用 conda 创建好环境后，可以在 PyCharm 中使用
+打开 File &gt; Settings &gt; Project &gt; Python Interpreter &gt; Add
+<img src="/assets/images/2021-11-11-python/conda_envs_interpreter_add.png" alt="add interpreter" /></p>
+
+<p>选择 conda 目录下已经创建好的环境
+<img src="/assets/images/2021-11-11-python/conda_envs_interpreter.png" alt="add interpreter" /></p>
+
+<h2 id="自动生成-requirementstxt">自动生成 requirements.txt</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>pipreqs
+pipreqs <span class="nb">.</span> <span class="nt">--encoding</span><span class="o">=</span>utf-8
+</code></pre></div></div>
+
+<h2 id="自动格式化">自动格式化</h2>
+
+<p>一个团队中的格式化风格必须保持一致，python 为我们提供了 yapf，autopep8，black等工具，我个人推荐black</p>
+
+<p>使用 <code class="language-plaintext highlighter-rouge">pip install black</code> 来安装black，一般情况下，终端如果采用 conda，我们会安装在一个通用的 env 中，每个环境，都可以使用同一个 black 来格式化。</p>
+
+<p>idea 中打开 settings 对话框，安装 File Watchers 插件。</p>
+
+<p><img src="/assets/images/2021-11-11-python/FileWatchersPlugins.png" alt="FileWatchersPlugins" /></p>
+
+<p><img src="/assets/images/2021-11-11-python/FileWatchersBlack.png" alt="FileWatchersBlack" /></p>
+
+<p>默认当 idea 失去焦点后，会自动格式化，所以按住 Alt+Tab 切换窗口后，idea会自动格式化</p>]]></content><author><name>eko.zhan</name></author><category term="Summary" /><category term="python" /><summary type="html"><![CDATA[Python]]></summary></entry><entry><title type="html">Linux（以 CentOS7.2 为主）</title><link href="/summary/2021/11/10/linux.html" rel="alternate" type="text/html" title="Linux（以 CentOS7.2 为主）" /><published>2021-11-10T00:00:00+00:00</published><updated>2021-11-10T00:00:00+00:00</updated><id>/summary/2021/11/10/linux</id><content type="html" xml:base="/summary/2021/11/10/linux.html"><![CDATA[<h1 id="linux以-centos72-为主">Linux（以 CentOS7.2 为主）</h1>
+
+<h2 id="装机必备">装机必备</h2>
+
+<ul>
+  <li>yum 源</li>
+  <li>docker</li>
+  <li>docker-compose</li>
+  <li>python2.7 与 python3.6 兼容</li>
+  <li>防火墙</li>
+  <li>jdk</li>
+  <li>gcc</li>
+  <li>sudoers 与 755</li>
+</ul>
+
+<h2 id="国内-yum-源">国内 yum 源</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
+mv CentOS7-Base-163.repo /etc/yum.repos.d/
+yum clean all
+yum makecache
+</code></pre></div></div>
+
+<p><a href="https://www.runoob.com/linux/linux-yum.html">https://www.runoob.com/linux/linux-yum.html</a></p>
+
+<p><a href="http://mirrors.163.com/.help/centos.html">http://mirrors.163.com/.help/centos.html</a></p>
+
+<h2 id="防火墙">防火墙</h2>
+
+<ol>
+  <li>centOS7 永久关闭防火墙(防火墙的基本使用)</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看状态</span>
+systemctl status firewalld.service
+
+<span class="c"># 关闭防火墙</span>
+systemctl stop firewalld.service
+
+<span class="c"># 开启防火墙</span>
+systemctl start firewalld.service
+
+<span class="c"># 设置开机启动</span>
+systemctl <span class="nb">enable </span>firewalld.service
+
+<span class="c"># 禁止开机启动</span>
+systemctl disable firewalld.service
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/ViJayThresh/article/details/81284007">centOS7永久关闭防火墙(防火墙的基本使用)</a></p>
+
+<ol>
+  <li>CentOS7 查看和关闭防火墙</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--state</span>
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/ytangdigl/article/details/79796961">CentOS7查看和关闭防火墙</a></p>
+
+<ol>
+  <li>CentOS 防火墙添加例外端口</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看状态</span>
+
+firewall-cmd <span class="nt">--state</span>
+
+<span class="c"># 添加 8080 例外端口</span>
+<span class="c"># –zone 作用域</span>
+<span class="c"># –add-port=8080/tcp 添加端口，格式为：端口/通讯协议</span>
+<span class="c"># –permanent 永久生效，没有此参数重启后失效</span>
+firewall-cmd <span class="nt">--permanent</span> <span class="nt">--zone</span><span class="o">=</span>public <span class="nt">--add-port</span><span class="o">=</span>8080/tcp
+
+<span class="c"># 重新加载</span>
+firewall-cmd <span class="nt">--reload</span>
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/jiankunking/article/details/78794383">Centos7 防火墙firewall添加例外端口</a></p>
+
+<h2 id="jdk-安装">jdk 安装</h2>
+
+<ol>
+  <li>解压 jdk-xxx-linux-x64.tar.gz，将解压的 jdk 目录移动到/opt 下</li>
+  <li>编辑 <code class="language-plaintext highlighter-rouge">/etc/profile</code></li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/profile
+
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk1.7.0_55
+
+<span class="c"># \$PATH 放在结束位置，否则会被系统自带的 openjdk 覆盖</span>
+
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>
+
+<span class="nb">source</span> /etc/profile
+</code></pre></div></div>
+
+<ol>
+  <li>运行 <code class="language-plaintext highlighter-rouge">java -version</code> 得到正确的版本</li>
+</ol>
+
+<p><strong>注意</strong></p>
+
+<p>如果 jdk 是 bin 文件，直接 <code class="language-plaintext highlighter-rouge">chmod 755</code>，然后 <code class="language-plaintext highlighter-rouge">./bin</code> 解压，接下来参考上面的步骤配置环境变量。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>755 jdk-6u27-linux-x64.bin
+
+./jdk-6u27-linux-x64.bin <span class="o">&gt;</span> /tmp/null
+</code></pre></div></div>
+
+<h2 id="tar-命令">tar 命令</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 解压</span>
+
+<span class="nb">tar</span> –zxvf xxx.tar.gz
+
+<span class="c"># 压缩</span>
+
+<span class="nb">tar</span> –zcvf xxx.tar.gz
+</code></pre></div></div>
+
+<p>或者</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 压缩</span>
+
+zip <span class="nt">-r</span> kbase-converter.zip kbase-converter/_ <span class="nt">-x</span> <span class="s2">"kbase-converter/DATAS_"</span>
+</code></pre></div></div>
+
+<h2 id="用户和组权限-sudoers">用户和组权限 sudoers</h2>
+
+<ol>
+  <li>基本用法</li>
+</ol>
+
+<ul>
+  <li>创建组 <code class="language-plaintext highlighter-rouge">groupadd g_normal</code></li>
+  <li>创建用户 <code class="language-plaintext highlighter-rouge">useradd -g g_normal u_search</code></li>
+  <li>修改密码 <code class="language-plaintext highlighter-rouge">passwd u_search</code></li>
+</ul>
+
+<ol>
+  <li>将用户 u_search 加入到 docker 组</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 方法一</span>
+groupadd docker
+usermod <span class="nt">-aG</span> docker u_search
+
+<span class="c"># 方法二</span>
+<span class="nb">sudo </span>gpasswd <span class="nt">-a</span> <span class="k">${</span><span class="nv">USER</span><span class="k">}</span> docker
+
+systemctl restart docker
+
+<span class="c"># 查询当前用户所属的所有组</span>
+<span class="nb">groups</span>
+</code></pre></div></div>
+
+<ol>
+  <li>文件权限操作</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 改变 filename 的所有者为 xiaoming</span>
+
+<span class="nb">chown </span>xiaoming filename
+
+<span class="c"># 改变 filename 所属的组为 root</span>
+
+<span class="nb">chgrp </span>root filename
+
+<span class="c"># 改变 dirname 这个目录的所有者是 root</span>
+
+<span class="nb">chown </span>root ./dirname
+
+<span class="c"># 改变 dirname 这个目录及其下面所的文件和目录的所有者是 root</span>
+
+<span class="nb">chown</span> ‐R root ./dirname
+</code></pre></div></div>
+
+<ol>
+  <li>设置 sudo</li>
+</ol>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whereis sudoers
+
+<span class="nb">chmod</span> <span class="nt">-v</span> u+w /etc/sudoers
+
+vim /etc/sudoers
+
+<span class="c">#这个是新用户</span>
+u_search <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> ALL
+
+<span class="nb">chmod</span> <span class="nt">-v</span> u-w /etc/sudoers
+</code></pre></div></div>
+
+<h2 id="scp-传输文件">scp 传输文件</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 传输文件</span>
+
+scp <span class="nt">-r</span> <span class="nt">-P</span> 12598 lucy 172.16.9.55:/home/eko_0807/
+
+<span class="c"># 拉取文件</span>
+
+scp <span class="nt">-r</span> <span class="nt">-P</span> 12598 ekozhan@172.16.9.55:/home/ekozhan/demo.tar.gz /home/eko_0807/
+</code></pre></div></div>
+
+<p><strong>注意</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">scp</code> 命令和 <code class="language-plaintext highlighter-rouge">ssh</code> 命令类似，记住一个，另一个妥妥的</p>
+
+<h2 id="ssh--ssh-免密登录">ssh &amp; ssh 免密登录</h2>
+
+<p>当前服务器 ip：192.168.1.200</p>
+
+<p>目标服务器 ip：192.168.1.210</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-l</span> hadoop 172.16.9.55 <span class="nt">-p</span> 12598
+</code></pre></div></div>
+
+<p>或者</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-p</span> 5060 eko.zhan@172.16.9.55
+</code></pre></div></div>
+
+<p>设置免密登录</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> rsa
+ssh-copy-id <span class="nt">-i</span> id_rsa.pub <span class="nt">-p</span> 12598 eko.zhan@192.168.1.210
+
+<span class="c"># 注意修改 sshd_config 中的参数</span>
+/etc/ssh/sshd_config
+RSAAuthentication <span class="nb">yes
+</span>PubkeyAuthentication <span class="nb">yes</span>
+</code></pre></div></div>
+
+<h2 id="查看目录下的文件个数">查看目录下的文件个数</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 列出目录下所有文件个数（包含子目录文件和子目录）</span>
+<span class="nb">ls</span> <span class="nt">-lR</span> | <span class="nb">wc</span> <span class="nt">-l</span>
+
+<span class="c"># 列出目录下所有文件个数（仅包含子目录文件）</span>
+<span class="nb">ls</span> <span class="nt">-lR</span> | <span class="nb">grep</span> <span class="s2">"^d"</span> | <span class="nb">wc</span> <span class="nt">-l</span>
+</code></pre></div></div>
+
+<h2 id="查目录包含子目录大小">查目录包含子目录大小</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">du</span> <span class="nt">-hsx</span> <span class="se">\*</span> | <span class="nb">sort</span> <span class="nt">-rh</span> | <span class="nb">head</span> <span class="nt">-10</span>
+
+<span class="nb">du</span> <span class="nt">-h</span> <span class="nt">--max-depth</span><span class="o">=</span>1 <span class="nb">.</span>
+</code></pre></div></div>
+
+<h2 id="find-命令">find 命令</h2>
+
+<p>查找文件名称包含 <code class="language-plaintext highlighter-rouge">.class</code> 的文件</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find . -name '\*.class' -newermt '2017-06-09'
+</code></pre></div></div>
+
+<p>查找文件名称包含 <code class="language-plaintext highlighter-rouge">.class</code> 的文件，并将内容写入 /app/ekozhan 文件中</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find . -name '\*.class' -newermt '2017-06-09' |xargs -i cp {} /app/ekozhan
+</code></pre></div></div>
+
+<p>统计 java 代码行数</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="nb">.</span> <span class="nt">-name</span> <span class="se">\*</span>.java |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> ^<span class="se">\$</span>|wc <span class="nt">-l</span>
+
+find <span class="nb">.</span> <span class="nt">-type</span> f |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\$</span><span class="s2">"</span>|grep <span class="nt">-v</span> <span class="s2">"^/"</span>|wc <span class="nt">-l</span>
+
+find <span class="nb">.</span> <span class="nt">-name</span> <span class="se">\*</span>.java |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\$</span><span class="s2">"</span>|grep <span class="nt">-v</span> <span class="s2">"^/"</span>|wc <span class="nt">-l</span>
+
+find <span class="nb">.</span> <span class="nt">-name</span> _.htm_ <span class="nt">-o</span> <span class="nt">-name</span> _.js_ <span class="nt">-o</span> <span class="nt">-name</span> <span class="se">\*</span>.java |xargs <span class="nb">cat</span>|grep <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\$</span><span class="s2">"</span>|grep <span class="nt">-v</span> <span class="s2">"^/"</span>|wc <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p>查找所有包含 <code class="language-plaintext highlighter-rouge">.png.txt</code> 的文件并删除</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+find ./ <span class="nt">-name</span> <span class="s1">'\*.png.txt'</span> |xargs <span class="nb">rm</span> <span class="nt">-rf</span>
+</code></pre></div></div>
+
+<p>查找所有包含 <code class="language-plaintext highlighter-rouge">.png.txt</code> 的文件（忽略大小写）并删除</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find ./ -iname '\*.png.txt' |xargs rm -rf
+</code></pre></div></div>
+
+<h2 id="cat-高级用法">cat 高级用法</h2>
+
+<p>查找日志中包含 <code class="language-plaintext highlighter-rouge">read time out</code> 的文本，不区分大小写</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat 2018_02_05.stdout.log |grep -i "read timed out"
+</code></pre></div></div>
+
+<p>查找日志中包含 <code class="language-plaintext highlighter-rouge">Exception</code>，不包含 <code class="language-plaintext highlighter-rouge">hibernate</code> <code class="language-plaintext highlighter-rouge">filter</code> <code class="language-plaintext highlighter-rouge">stream</code> 的文本</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">cat </span>2018_02_05.stdout.log |grep Exception|grep <span class="nt">-vi</span> hibernate|grep <span class="nt">-vi</span> filter|grep <span class="nt">-vi</span> stream
+</code></pre></div></div>
+
+<p>查看日志，从第 80780 行开始，显示 100 行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="nt">-n</span> 2018_02_05.stdout.log|tail <span class="nt">-n</span> +80780|head <span class="nt">-n</span> 100
+</code></pre></div></div>
+
+<p>查看日志包含 <code class="language-plaintext highlighter-rouge">Exception</code> 的本文，上下 3 行</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>debug.log |grep <span class="nt">-C</span> 3 Exception
+</code></pre></div></div>
+
+<h2 id="杀进程">杀进程</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="sb">`</span>ps <span class="nt">-ef</span>|grep java|grep <span class="nt">-v</span> <span class="nb">grep</span>|grep kbase-conference|awk <span class="s1">'{print $2}'</span><span class="sb">`</span>
+
+ps <span class="nt">-ef</span>|grep soffice|grep <span class="nt">-v</span> <span class="nb">grep</span>|awk <span class="s1">'{print \$2}'</span>|xargs <span class="nb">kill</span> <span class="nt">-9</span>
+</code></pre></div></div>
+
+<h2 id="创建软连接">创建软连接</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ln</span> <span class="nt">-s</span> /mnt/disk0/xiaoi /xiaoi
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /home/ekozhan/Programs/node-v14.15.4-linux-x64/bin/node /usr/local/bin/node
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /home/ekozhan/Programs/node-v14.15.4-linux-x64/bin/npm /usr/local/bin/npm
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /home/ekozhan/Programs/node-v14.15.4-linux-x64/bin/cnpm /usr/local/bin/cnpm
+</code></pre></div></div>
+
+<h2 id="重启关机记录排查">重启关机记录排查</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>last|grep reboot
+<span class="nb">history</span>|grep reboot
+<span class="nb">cat</span> /var/log/messages
+</code></pre></div></div>
+
+<h2 id="close_wait">CLOSE_WAIT</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-n</span> | <span class="nb">awk</span> <span class="s1">'/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'</span>
+
+<span class="c"># 客户端连接数量，Connection Refused，最大数 65535</span>
+
+netstat <span class="nt">-nat</span>|grep <span class="nt">-i</span> 8080|wc <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/duan19056/article/details/51210110">Linux下TCP最大连接数受限问题</a></p>
+
+<h2 id="crontab-定时任务">crontab 定时任务</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crontab <span class="nt">-e</span> 0 1 <span class="se">\*</span> <span class="se">\*</span> <span class="se">\*</span> /usr/bin/python3 /home/yogurt/XinhuaSpider.py <span class="o">&gt;&gt;</span> /home/yogurt/spider.out
+
+crontab <span class="nt">-e</span> 59 23 <span class="se">\*</span> <span class="se">\*</span> _ <span class="nb">rm</span> <span class="nt">-rf</span> /tmp/lu_.tmp /tmp/webdav<span class="se">\*</span>.log
+
+crontab <span class="nt">-e</span> 30 0 <span class="se">\*</span> <span class="se">\*</span> _ find /tmp/lu_.tmp <span class="nt">-ctime</span> 0 <span class="nt">-exec</span> <span class="nb">rm</span> <span class="nt">-rf</span> <span class="o">{}</span> <span class="se">\;</span>
+
+</code></pre></div></div>
+
+<h2 id="修改时间">修改时间</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">date</span> <span class="nt">-s</span> <span class="s2">"2015-08-11 13:06:30"</span>
+clock <span class="nt">-w</span>
+</code></pre></div></div>
+
+<h2 id="源码安装样例">源码安装样例</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://memcached.org/latest
+<span class="nb">tar</span> <span class="nt">-zxvf</span> memcached-1.x.x.tar.gz
+
+<span class="nb">cd </span>memcached-1.x.x
+
+./configure <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> make <span class="nb">test</span> <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>make <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="debian-与-centos-语法差异">Debian 与 CentOS 语法差异</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Debian/Ubuntu: apt-get <span class="nb">install </span>libevent-dev
+
+Redhat/Centos: yum <span class="nb">install </span>libevent-devel
+</code></pre></div></div>
+
+<h2 id="gcc">gcc</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> <span class="nb">install </span>gcc
+</code></pre></div></div>
+
+<h2 id="hostname-修改">hostname 修改</h2>
+
+<ol>
+  <li>hostname</li>
+  <li>hostnamectl set-hostname ibotplus</li>
+  <li>vim /etc/hosts</li>
+</ol>
+
+<h2 id="python27-与-python36-兼容">python2.7 与 python3.6 兼容</h2>
+
+<p>CentOS7.2 安装 pip 以及升级</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> <span class="nb">install </span>epel-release
+
+yum <span class="nt">-y</span> <span class="nb">install </span>python-pip
+
+pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+</code></pre></div></div>
+
+<p>python2.7 与 python3.6 兼容</p>
+
+<p><a href="https://linuxize.com/post/how-to-install-python-3-on-centos-7/">How to Install Python 3 on CentOS 7</a></p>
+
+<p>推荐使用 conda</p>
+
+<h2 id="docker-安装">Docker 安装</h2>
+
+<p>详见 <a href="./docker.html">docker</a></p>
+
+<h2 id="ulimit">ulimit</h2>
+
+<p><code class="language-plaintext highlighter-rouge">/etc/security/limits.d/90-nproc.conf</code></p>
+
+<p>Ubuntu 上修改 ulimit 还有些小复杂</p>
+
+<p><a href="https://blog.csdn.net/inthat/article/details/106741499">linux ulimit 修改文件最大数（ubuntu 20.04、CentOS）</a></p>
+
+<h2 id="查看版本">查看版本</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">uname</span> <span class="nt">-a</span>
+<span class="nb">cat</span> /etc/redhat-release
+</code></pre></div></div>
+
+<h2 id="alias">alias</h2>
+
+<p>添加命令并永久生效</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">'ls -a'</span>
+vim /root/.bashrc
+<span class="nb">source</span> /root/.bashrc
+</code></pre></div></div>
+
+<h2 id="shell-脚本编码问题">shell 脚本编码问题</h2>
+
+<blockquote>
+  <p>关于 linux 中执行 shell 文件出现 ^M 的问题，vim里查看编码是否是 [dos]， 如果是，运行:set ff=unix ，保存退出即可</p>
+</blockquote>
+
+<h2 id="磁盘分区与挂载">磁盘分区与挂载</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fdisk <span class="nt">-l</span>
+</code></pre></div></div>
+
+<p><a href="https://www.npbeta.com/2020/12/ubuntu_disk_resize_inode/">Ubuntu 18.04 磁盘根目录在线扩容 &amp; 修改分区 inode 数量</a></p>
+
+<h2 id="查询所有连接设备">查询所有连接设备</h2>
+
+<p><code class="language-plaintext highlighter-rouge">lspci</code> <a href="https://blog.csdn.net/styshoo/article/details/51281437">Linux系统之lspci命令介绍</a></p>]]></content><author><name>eko.zhan</name></author><category term="Summary" /><category term="linux" /><summary type="html"><![CDATA[Linux（以 CentOS7.2 为主）]]></summary></entry><entry><title type="html">Docker</title><link href="/summary/2021/01/31/docker.html" rel="alternate" type="text/html" title="Docker" /><published>2021-01-31T00:00:00+00:00</published><updated>2021-01-31T00:00:00+00:00</updated><id>/summary/2021/01/31/docker</id><content type="html" xml:base="/summary/2021/01/31/docker.html"><![CDATA[<h1 id="docker">Docker</h1>
+
+<h2 id="centos72-安装-docker">centos7.2 安装 docker</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  yum <span class="nb">install </span>docker
+</code></pre></div></div>
+
+<p><a href="https://www.jianshu.com/p/232bc2c1e95d">centos7.2安装docker</a></p>
+
+<p>在 docker 里禁用 selinux</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/sysconfig/docker
+<span class="nt">--selinux-enabled</span><span class="o">=</span><span class="nb">false</span>
+</code></pre></div></div>
+
+<p><a href="https://www.cnblogs.com/hongdada/p/8886893.html">CentOS7.2 安装Docker</a></p>
+
+<p>centos7 安装 docker 并设置开机启动</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl <span class="nb">enable </span>docker
+</code></pre></div></div>
+
+<p><a href="https://www.cnblogs.com/rwxwsblog/p/5436445.html">centos7安装docker并设置开机启动</a></p>
+
+<p>docker 启动，重启，关闭命令</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>service docker start
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/EasternUnbeaten/article/details/80463837">docker服务启动,重启,关闭命令</a></p>
+
+<h2 id="docker-compose-安装">docker-compose 安装</h2>
+
+<p><a href="https://github.com/docker/compose/releases">https://github.com/docker/compose/releases</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1.x</span>
+curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/1.25.4/docker-compose-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="nt">-o</span> /usr/local/bin/docker-compose
+
+<span class="nb">chmod</span> +x /usr/local/bin/docker-compose
+
+<span class="c"># 2.x</span>
+curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/v2.33.1/docker-compose-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="nt">-o</span> /usr/local/lib/docker/cli-plugins/docker-compose
+
+<span class="nb">chmod</span> +x /usr/local/lib/docker/cli-plugins/docker-compose
+</code></pre></div></div>
+
+<h2 id="docker-镜像与容器">Docker 镜像与容器</h2>
+
+<p>拉取镜像</p>
+
+<ol>
+  <li>docker search nginx</li>
+  <li>docker pull nginx</li>
+  <li>docker run -p 80:80 –name ng_container -d nginx</li>
+</ol>
+
+<p>Docker 删除 <none> 镜像</none></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker rmi <span class="si">$(</span>docker images | <span class="nb">grep</span> <span class="s2">"^&lt;none&gt;"</span> | <span class="nb">awk</span> <span class="s2">"{print </span><span class="nv">$3</span><span class="s2">}"</span><span class="si">)</span>
+</code></pre></div></div>
+
+<p>Docker 运行容器</p>
+
+<ul>
+  <li>-d: 后台运行容器，并返回容器 ID</li>
+  <li>-v: 主机的目录/app/tomcat/webapps 映射到容器的/app/tomcat/webapps</li>
+  <li>-t：进入终端</li>
+  <li>-i：获得一个交互式的连接，通过获取 container 的输入</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8080:8080 <span class="nt">-p</span> 8009:8009 <span class="nt">-v</span> /app/tomcat/webapps:/app/tomcat/webapps tomcat
+
+docker run <span class="nt">-p</span> 80:80 <span class="nt">--name</span> ng_container <span class="nt">-v</span> <span class="nv">$PWD</span>/www:/www <span class="nt">-v</span> <span class="nv">$PWD</span>/conf/nginx.conf:/etc/nginx/nginx.conf <span class="nt">-v</span> <span class="se">\$</span>PWD/logs:/www/logs <span class="nt">-d</span> nginx
+</code></pre></div></div>
+
+<p>Docker 进入容器</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> container_id bash
+docker <span class="nb">exec</span> <span class="nt">-it</span> container_name /sh
+</code></pre></div></div>
+
+<p>Docker 退出容器</p>
+
+<ul>
+  <li>exit</li>
+  <li>CTRL+D</li>
+</ul>
+
+<p>Docker 删除容器</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps <span class="nt">-a</span>
+
+docker stop container_id
+docker <span class="nb">rm </span>container_id
+</code></pre></div></div>
+
+<h2 id="docker-同时删除停止的容器">docker 同时删除停止的容器</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">rm</span> <span class="se">\$</span><span class="o">(</span>docker container <span class="nb">ls</span> <span class="nt">-f</span> <span class="s2">"status=exited"</span> <span class="nt">-q</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>Docker 容器内安装 ifconfig netstat ping vim 等测试工具的方法</p>
+
+<p><a href="https://blog.csdn.net/weixin_42350212/article/details/84973320">docker容器内安装ifconfig netstat ping vim 等测试工具的方法</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>iputils-ping
+
+apt-get <span class="nb">install </span>vim
+</code></pre></div></div>
+
+<p>查看容器详情</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker inspect container_id
+</code></pre></div></div>
+
+<h2 id="dockerfile-编写样例">Dockerfile 编写样例</h2>
+
+<p><a href="https://github.com/ekoz/docker-kbase/blob/master/Dockerfile">https://github.com/ekoz/docker-kbase/blob/master/Dockerfile</a></p>
+
+<h2 id="docker-save-与-docker-export-的区别">Docker save 与 Docker export 的区别</h2>
+
+<p><a href="https://blog.csdn.net/liukuan73/article/details/78089138">docker save与docker export的区别</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker save <span class="se">\</span>
+ekozhan/nginx:1.0 <span class="se">\</span>
+ekozhan/elasticsearch:1.0 <span class="se">\</span>
+ekozhan/kibana:1.0 <span class="se">\</span>
+| <span class="nb">gzip</span> <span class="o">&gt;</span> docker_images_20201202_1.0.tar.gz
+</code></pre></div></div>
+
+<h3 id="将容器打包成镜像并启动">将容器打包成镜像并启动</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost mysql]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+cc72f2b081b9        mysql:8.0           <span class="s2">"docker-entrypoint.s…"</span>   3 weeks ago         Up 6 minutes        0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql-docker
+<span class="o">[</span>root@localhost mysql]# <span class="nb">pwd</span>
+/opt/app/mysql
+<span class="o">[</span>root@localhost mysql]# <span class="nb">ls
+</span>data  docker-compose.yml
+<span class="o">[</span>root@localhost mysql]# docker <span class="nb">export</span> <span class="nt">-o</span> mysql-export.tar cc72f2b081b9
+<span class="o">[</span>root@localhost mysql]# <span class="nb">ls
+</span>data  docker-compose.yml  mysql-export.tar
+<span class="o">[</span>root@localhost mysql]# docker import mysql-export.tar ekozhan/mysql:0.1
+sha256:cde3f783415f0dc7a76d7df89765ced2e59db38dff3e2534d859b476f5497e15
+<span class="o">[</span>root@localhost mysql]# docker images
+REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+ekozhan/mysql            0.1                 cde3f783415f        5 seconds ago       538MB
+mysql                    8.0                 8e85dd5c3255        3 weeks ago         544MB
+wurstmeister/kafka       latest              40094a582680        2 months ago        435MB
+wurstmeister/zookeeper   latest              3f43f72cb283        21 months ago       510MB
+<span class="o">[</span>root@localhost mysql]# docker run <span class="nt">--name</span> mysql3306 <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>123456  <span class="nt">-d</span> <span class="nt">-p</span> 3308:3308 cde3f783415f docker-entrypoint.sh mysqld
+dd344b94113c301930b5b0a5184ed41b4679e7a5b4e45adb69f894df1a870417
+<span class="o">[</span>root@localhost mysql]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+dd344b94113c        cde3f783415f        <span class="s2">"docker-entrypoint.s…"</span>   4 seconds ago       Up 3 seconds        0.0.0.0:3308-&gt;3308/tcp              mysql3306
+cc72f2b081b9        mysql:8.0           <span class="s2">"docker-entrypoint.s…"</span>   3 weeks ago         Up 15 minutes       0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql-docker
+
+</code></pre></div></div>
+
+<h2 id="docker-限制容器可用的内存">Docker: 限制容器可用的内存</h2>
+
+<p><a href="https://www.cnblogs.com/sparkdev/p/8032330.html">Docker: 限制容器可用的内存</a></p>
+
+<h2 id="demo">Demo</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># mysql</span>
+
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 3306:3306 <span class="nt">--restart</span> always <span class="nt">--privileged</span><span class="o">=</span><span class="nb">true</span> <span class="nt">--name</span> mysql3306 <span class="nt">-e</span> <span class="nv">MYSQL_USER</span><span class="o">=</span><span class="s2">"u_teach"</span> <span class="nt">-e</span> <span class="nv">MYSQL_PASSWORD</span><span class="o">=</span><span class="s2">"u_teach"</span> <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="s2">"rOOt"</span> <span class="nt">-v</span> /home/ekozhan/mysql/data:/var/lib/mysql <span class="nt">-v</span> /home/ekozhan/mysql/logs:/var/log/mysql 1e4405fe1ea9
+
+<span class="c"># mongodb</span>
+
+docker run <span class="nt">--name</span> mongo_container <span class="nt">-p</span> 27017:27017 <span class="nt">-e</span> <span class="nv">TZ</span><span class="o">=</span><span class="s2">"Asia/Shanghai"</span> <span class="nt">--restart</span> always <span class="nt">--privileged</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-v</span> /opt/docker/mongodb/data/db:/data/db <span class="nt">-v</span> /opt/docker/mongodb/data/configdb:/data/configdb <span class="nt">-v</span> /opt/docker/mongodb/data/logs:/data/logs <span class="nt">-e</span> <span class="nv">MONGO_INITDB_ROOT_USERNAME</span><span class="o">=</span>root <span class="nt">-e</span> <span class="nv">MONGO_INITDB_ROOT_PASSWORD</span><span class="o">=</span>rOOt <span class="nt">-d</span> 57c2f7e05108 <span class="nt">--config</span> /opt/docker/mongodb/data/mongod.conf
+</code></pre></div></div>
+
+<h2 id="docker-使用国内镜像仓库">Docker 使用国内镜像仓库</h2>
+
+<p><code class="language-plaintext highlighter-rouge">vim /etc/docker/daemon.json</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+    <span class="s2">"registry-mirrors"</span> : <span class="o">[</span>
+        <span class="s2">"https://registry.docker-cn.com"</span>,
+        <span class="s2">"https://docker.mirrors.ustc.edu.cn"</span>,
+        <span class="s2">"http://hub-mirror.c.163.com"</span>,
+        <span class="s2">"https://cr.console.aliyun.com/"</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="dockerfile-中使用国内镜像仓库demo">Dockerfile 中使用国内镜像仓库demo</h3>
+
+<h4 id="alpinelatest">alpine:latest</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM alpine:latest
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &amp;&amp; \
+    apk --update add curl &amp;&amp; rm -rf /var/cache/apk/*
+</code></pre></div></div>
+
+<h4 id="python">python</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM python:3.9.0
+
+RUN pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/
+
+RUN pip config set install.trusted-host mirrors.aliyun.com
+
+WORKDIR /opt
+</code></pre></div></div>
+
+<h2 id="docker-compose">docker-compose</h2>
+
+<p><strong>注意</strong></p>
+
+<p>项目中使用最多的就是 docker-compose</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+docker-compose down
+docker-compose build
+docker-compose up <span class="nt">-d</span>
+</code></pre></div></div>
+
+<h2 id="相关资料">相关资料</h2>
+
+<p><a href="https://yeasy.gitbooks.io/docker_practice/">https://yeasy.gitbooks.io/docker_practice/</a></p>
+
+<p><a href="https://www.runoob.com/docker/docker-compose.html">https://www.runoob.com/docker/docker-compose.html</a></p>
+
+<h2 id="centos8-安装-docker-遇到的报错">CentOS8 安装 docker 遇到的报错</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
+
+yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+
+yum-config-manager  <span class="nt">--add-repo</span>   https://download.docker.com/linux/centos/docker-ce.repo
+
+yum <span class="nb">install</span> <span class="nt">-y</span> https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/edge/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+
+yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce containerd.io
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/u012587407/article/details/107287982/">CentOS8安装 Docker报错 package docker-ce-3:19.03.12-3.el7.x86_64 requires containerd.io 」= 1.2.2-3</a></p>]]></content><author><name>eko.zhan</name></author><category term="Summary" /><category term="docker" /><summary type="html"><![CDATA[Docker]]></summary></entry></feed>

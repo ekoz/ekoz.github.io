@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Docker | 飞翔的荷兰人</title>
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="Docker">
+<meta name="author" content="eko.zhan">
+<meta property="og:locale" content="zh_CN">
+<meta name="description" content="Docker">
+<meta property="og:description" content="Docker">
+<link rel="canonical" href="/summary/2021/01/31/docker.html">
+<meta property="og:url" content="/summary/2021/01/31/docker.html">
+<meta property="og:site_name" content="飞翔的荷兰人">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2021-01-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Docker">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"eko.zhan"},"dateModified":"2021-01-31T00:00:00+00:00","datePublished":"2021-01-31T00:00:00+00:00","description":"Docker","headline":"Docker","mainEntityOfPage":{"@type":"WebPage","@id":"/summary/2021/01/31/docker.html"},"url":"/summary/2021/01/31/docker.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/avatar.jpg">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="飞翔的荷兰人">
+<!-- Google tag (gtag.js) -->
+<script>
+  function initGoogleAnalytics() {
+    var doNotTrack = (window.doNotTrack === "1" || navigator.doNotTrack === "1" ||
+      navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1");
+    var enableDNT = "false" == "true";
+
+    if (!enableDNT || !doNotTrack) {
+      var measurementId = 'G-CKCQ9YNCG2';
+
+      (function(src) {
+        var tag = document.createElement('script');
+        tag.src = src;
+        tag.async = true;
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      })('https://www.googletagmanager.com/gtag/js?id=' + measurementId);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', measurementId);
+    }
+  }
+  window.addEventListener("load", initGoogleAnalytics);
+</script>
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/umd/photoswipe.umd.min.js" async></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="飞翔的荷兰人" src="/assets/images/avatar.jpg" onerror="this.style.display='none'">
+  飞翔的荷兰人
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/">首页</a><a class="page-link" href="/archives.html">文章</a><a class="page-link" href="/categories.html">分类</a><a class="page-link" href="/tags.html">标签</a><a class="page-link" href="/about.html">关于</a>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    html .page-banner .page-banner-img > *:first-child {
+      opacity: 0.8;
+    }
+
+    html[data-theme="dark"] .page-banner .page-banner-img > *:first-child {
+      opacity: 0.5744;
+    }
+  </style>
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/assets/images/banners/banner-docker.jpg)"></div>
+        <img class="img-placeholder" src="/assets/images/banners/banner-docker.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Docker</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2021-01-31T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-01-31
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> eko.zhan</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 17 mins</span>
+  </div>
+<div class="post-tags"><a class="post-tag" href="/tags.html#docker">#docker</a></div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('on' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="docker">Docker</h1>
+
+<h2 id="centos72-安装-docker">centos7.2 安装 docker</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  yum <span class="nb">install </span>docker
+</code></pre></div></div>
+
+<p><a href="https://www.jianshu.com/p/232bc2c1e95d">centos7.2安装docker</a></p>
+
+<p>在 docker 里禁用 selinux</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/sysconfig/docker
+<span class="nt">--selinux-enabled</span><span class="o">=</span><span class="nb">false</span>
+</code></pre></div></div>
+
+<p><a href="https://www.cnblogs.com/hongdada/p/8886893.html">CentOS7.2 安装Docker</a></p>
+
+<p>centos7 安装 docker 并设置开机启动</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl <span class="nb">enable </span>docker
+</code></pre></div></div>
+
+<p><a href="https://www.cnblogs.com/rwxwsblog/p/5436445.html">centos7安装docker并设置开机启动</a></p>
+
+<p>docker 启动，重启，关闭命令</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>service docker start
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/EasternUnbeaten/article/details/80463837">docker服务启动,重启,关闭命令</a></p>
+
+<h2 id="docker-compose-安装">docker-compose 安装</h2>
+
+<p><a href="https://github.com/docker/compose/releases">https://github.com/docker/compose/releases</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1.x</span>
+curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/1.25.4/docker-compose-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="nt">-o</span> /usr/local/bin/docker-compose
+
+<span class="nb">chmod</span> +x /usr/local/bin/docker-compose
+
+<span class="c"># 2.x</span>
+curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/v2.33.1/docker-compose-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="nt">-o</span> /usr/local/lib/docker/cli-plugins/docker-compose
+
+<span class="nb">chmod</span> +x /usr/local/lib/docker/cli-plugins/docker-compose
+</code></pre></div></div>
+
+<h2 id="docker-镜像与容器">Docker 镜像与容器</h2>
+
+<p>拉取镜像</p>
+
+<ol>
+  <li>docker search nginx</li>
+  <li>docker pull nginx</li>
+  <li>docker run -p 80:80 –name ng_container -d nginx</li>
+</ol>
+
+<p>Docker 删除 <none> 镜像</none></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker rmi <span class="si">$(</span>docker images | <span class="nb">grep</span> <span class="s2">"^&lt;none&gt;"</span> | <span class="nb">awk</span> <span class="s2">"{print </span><span class="nv">$3</span><span class="s2">}"</span><span class="si">)</span>
+</code></pre></div></div>
+
+<p>Docker 运行容器</p>
+
+<ul>
+  <li>-d: 后台运行容器，并返回容器 ID</li>
+  <li>-v: 主机的目录/app/tomcat/webapps 映射到容器的/app/tomcat/webapps</li>
+  <li>-t：进入终端</li>
+  <li>-i：获得一个交互式的连接，通过获取 container 的输入</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8080:8080 <span class="nt">-p</span> 8009:8009 <span class="nt">-v</span> /app/tomcat/webapps:/app/tomcat/webapps tomcat
+
+docker run <span class="nt">-p</span> 80:80 <span class="nt">--name</span> ng_container <span class="nt">-v</span> <span class="nv">$PWD</span>/www:/www <span class="nt">-v</span> <span class="nv">$PWD</span>/conf/nginx.conf:/etc/nginx/nginx.conf <span class="nt">-v</span> <span class="se">\$</span>PWD/logs:/www/logs <span class="nt">-d</span> nginx
+</code></pre></div></div>
+
+<p>Docker 进入容器</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> container_id bash
+docker <span class="nb">exec</span> <span class="nt">-it</span> container_name /sh
+</code></pre></div></div>
+
+<p>Docker 退出容器</p>
+
+<ul>
+  <li>exit</li>
+  <li>CTRL+D</li>
+</ul>
+
+<p>Docker 删除容器</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps <span class="nt">-a</span>
+
+docker stop container_id
+docker <span class="nb">rm </span>container_id
+</code></pre></div></div>
+
+<h2 id="docker-同时删除停止的容器">docker 同时删除停止的容器</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">rm</span> <span class="se">\$</span><span class="o">(</span>docker container <span class="nb">ls</span> <span class="nt">-f</span> <span class="s2">"status=exited"</span> <span class="nt">-q</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>Docker 容器内安装 ifconfig netstat ping vim 等测试工具的方法</p>
+
+<p><a href="https://blog.csdn.net/weixin_42350212/article/details/84973320">docker容器内安装ifconfig netstat ping vim 等测试工具的方法</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>iputils-ping
+
+apt-get <span class="nb">install </span>vim
+</code></pre></div></div>
+
+<p>查看容器详情</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker inspect container_id
+</code></pre></div></div>
+
+<h2 id="dockerfile-编写样例">Dockerfile 编写样例</h2>
+
+<p><a href="https://github.com/ekoz/docker-kbase/blob/master/Dockerfile">https://github.com/ekoz/docker-kbase/blob/master/Dockerfile</a></p>
+
+<h2 id="docker-save-与-docker-export-的区别">Docker save 与 Docker export 的区别</h2>
+
+<p><a href="https://blog.csdn.net/liukuan73/article/details/78089138">docker save与docker export的区别</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker save <span class="se">\</span>
+ekozhan/nginx:1.0 <span class="se">\</span>
+ekozhan/elasticsearch:1.0 <span class="se">\</span>
+ekozhan/kibana:1.0 <span class="se">\</span>
+| <span class="nb">gzip</span> <span class="o">&gt;</span> docker_images_20201202_1.0.tar.gz
+</code></pre></div></div>
+
+<h3 id="将容器打包成镜像并启动">将容器打包成镜像并启动</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost mysql]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+cc72f2b081b9        mysql:8.0           <span class="s2">"docker-entrypoint.s…"</span>   3 weeks ago         Up 6 minutes        0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql-docker
+<span class="o">[</span>root@localhost mysql]# <span class="nb">pwd</span>
+/opt/app/mysql
+<span class="o">[</span>root@localhost mysql]# <span class="nb">ls
+</span>data  docker-compose.yml
+<span class="o">[</span>root@localhost mysql]# docker <span class="nb">export</span> <span class="nt">-o</span> mysql-export.tar cc72f2b081b9
+<span class="o">[</span>root@localhost mysql]# <span class="nb">ls
+</span>data  docker-compose.yml  mysql-export.tar
+<span class="o">[</span>root@localhost mysql]# docker import mysql-export.tar ekozhan/mysql:0.1
+sha256:cde3f783415f0dc7a76d7df89765ced2e59db38dff3e2534d859b476f5497e15
+<span class="o">[</span>root@localhost mysql]# docker images
+REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+ekozhan/mysql            0.1                 cde3f783415f        5 seconds ago       538MB
+mysql                    8.0                 8e85dd5c3255        3 weeks ago         544MB
+wurstmeister/kafka       latest              40094a582680        2 months ago        435MB
+wurstmeister/zookeeper   latest              3f43f72cb283        21 months ago       510MB
+<span class="o">[</span>root@localhost mysql]# docker run <span class="nt">--name</span> mysql3306 <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>123456  <span class="nt">-d</span> <span class="nt">-p</span> 3308:3308 cde3f783415f docker-entrypoint.sh mysqld
+dd344b94113c301930b5b0a5184ed41b4679e7a5b4e45adb69f894df1a870417
+<span class="o">[</span>root@localhost mysql]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+dd344b94113c        cde3f783415f        <span class="s2">"docker-entrypoint.s…"</span>   4 seconds ago       Up 3 seconds        0.0.0.0:3308-&gt;3308/tcp              mysql3306
+cc72f2b081b9        mysql:8.0           <span class="s2">"docker-entrypoint.s…"</span>   3 weeks ago         Up 15 minutes       0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql-docker
+
+</code></pre></div></div>
+
+<h2 id="docker-限制容器可用的内存">Docker: 限制容器可用的内存</h2>
+
+<p><a href="https://www.cnblogs.com/sparkdev/p/8032330.html">Docker: 限制容器可用的内存</a></p>
+
+<h2 id="demo">Demo</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># mysql</span>
+
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 3306:3306 <span class="nt">--restart</span> always <span class="nt">--privileged</span><span class="o">=</span><span class="nb">true</span> <span class="nt">--name</span> mysql3306 <span class="nt">-e</span> <span class="nv">MYSQL_USER</span><span class="o">=</span><span class="s2">"u_teach"</span> <span class="nt">-e</span> <span class="nv">MYSQL_PASSWORD</span><span class="o">=</span><span class="s2">"u_teach"</span> <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="s2">"rOOt"</span> <span class="nt">-v</span> /home/ekozhan/mysql/data:/var/lib/mysql <span class="nt">-v</span> /home/ekozhan/mysql/logs:/var/log/mysql 1e4405fe1ea9
+
+<span class="c"># mongodb</span>
+
+docker run <span class="nt">--name</span> mongo_container <span class="nt">-p</span> 27017:27017 <span class="nt">-e</span> <span class="nv">TZ</span><span class="o">=</span><span class="s2">"Asia/Shanghai"</span> <span class="nt">--restart</span> always <span class="nt">--privileged</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-v</span> /opt/docker/mongodb/data/db:/data/db <span class="nt">-v</span> /opt/docker/mongodb/data/configdb:/data/configdb <span class="nt">-v</span> /opt/docker/mongodb/data/logs:/data/logs <span class="nt">-e</span> <span class="nv">MONGO_INITDB_ROOT_USERNAME</span><span class="o">=</span>root <span class="nt">-e</span> <span class="nv">MONGO_INITDB_ROOT_PASSWORD</span><span class="o">=</span>rOOt <span class="nt">-d</span> 57c2f7e05108 <span class="nt">--config</span> /opt/docker/mongodb/data/mongod.conf
+</code></pre></div></div>
+
+<h2 id="docker-使用国内镜像仓库">Docker 使用国内镜像仓库</h2>
+
+<p><code class="language-plaintext highlighter-rouge">vim /etc/docker/daemon.json</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+    <span class="s2">"registry-mirrors"</span> : <span class="o">[</span>
+        <span class="s2">"https://registry.docker-cn.com"</span>,
+        <span class="s2">"https://docker.mirrors.ustc.edu.cn"</span>,
+        <span class="s2">"http://hub-mirror.c.163.com"</span>,
+        <span class="s2">"https://cr.console.aliyun.com/"</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="dockerfile-中使用国内镜像仓库demo">Dockerfile 中使用国内镜像仓库demo</h3>
+
+<h4 id="alpinelatest">alpine:latest</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM alpine:latest
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &amp;&amp; \
+    apk --update add curl &amp;&amp; rm -rf /var/cache/apk/*
+</code></pre></div></div>
+
+<h4 id="python">python</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM python:3.9.0
+
+RUN pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/
+
+RUN pip config set install.trusted-host mirrors.aliyun.com
+
+WORKDIR /opt
+</code></pre></div></div>
+
+<h2 id="docker-compose">docker-compose</h2>
+
+<p><strong>注意</strong></p>
+
+<p>项目中使用最多的就是 docker-compose</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+docker-compose down
+docker-compose build
+docker-compose up <span class="nt">-d</span>
+</code></pre></div></div>
+
+<h2 id="相关资料">相关资料</h2>
+
+<p><a href="https://yeasy.gitbooks.io/docker_practice/">https://yeasy.gitbooks.io/docker_practice/</a></p>
+
+<p><a href="https://www.runoob.com/docker/docker-compose.html">https://www.runoob.com/docker/docker-compose.html</a></p>
+
+<h2 id="centos8-安装-docker-遇到的报错">CentOS8 安装 docker 遇到的报错</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
+
+yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils
+
+yum-config-manager  <span class="nt">--add-repo</span>   https://download.docker.com/linux/centos/docker-ce.repo
+
+yum <span class="nb">install</span> <span class="nt">-y</span> https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/edge/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+
+yum <span class="nb">install</span> <span class="nt">-y</span> docker-ce containerd.io
+</code></pre></div></div>
+
+<p><a href="https://blog.csdn.net/u012587407/article/details/107287982/">CentOS8安装 Docker报错 package docker-ce-3:19.03.12-3.el7.x86_64 requires containerd.io 」= 1.2.2-3</a></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<span></span><a class="next" href="/summary/2021/11/10/linux.html" title="Linux（以 CentOS7.2 为主）">Linux（以 CentOS7.2 为主）</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/summary/2021/11/22/nodejs.html" title="NodeJS">
+            NodeJS<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/11/10/linux.html" title="Linux（以 CentOS7.2 为主）">
+            Linux（以 CentOS7.2 为主）<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/11/11/python.html" title="Python">
+            Python<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2022/05/25/ffmpeg.html" title="FFmpeg 常用命令">
+            FFmpeg 常用命令<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 eko.zhan</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

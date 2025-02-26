@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>FFmpeg 常用命令 | 飞翔的荷兰人</title>
+<meta name="generator" content="Jekyll v4.4.1">
+<meta property="og:title" content="FFmpeg 常用命令">
+<meta name="author" content="eko.zhan">
+<meta property="og:locale" content="zh_CN">
+<meta name="description" content="FFmpeg 常用命令">
+<meta property="og:description" content="FFmpeg 常用命令">
+<link rel="canonical" href="/summary/2022/05/25/ffmpeg.html">
+<meta property="og:url" content="/summary/2022/05/25/ffmpeg.html">
+<meta property="og:site_name" content="飞翔的荷兰人">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-05-25T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="FFmpeg 常用命令">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"eko.zhan"},"dateModified":"2022-05-25T00:00:00+00:00","datePublished":"2022-05-25T00:00:00+00:00","description":"FFmpeg 常用命令","headline":"FFmpeg 常用命令","mainEntityOfPage":{"@type":"WebPage","@id":"/summary/2022/05/25/ffmpeg.html"},"url":"/summary/2022/05/25/ffmpeg.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/avatar.jpg">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="飞翔的荷兰人">
+<!-- Google tag (gtag.js) -->
+<script>
+  function initGoogleAnalytics() {
+    var doNotTrack = (window.doNotTrack === "1" || navigator.doNotTrack === "1" ||
+      navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1");
+    var enableDNT = "false" == "true";
+
+    if (!enableDNT || !doNotTrack) {
+      var measurementId = 'G-CKCQ9YNCG2';
+
+      (function(src) {
+        var tag = document.createElement('script');
+        tag.src = src;
+        tag.async = true;
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      })('https://www.googletagmanager.com/gtag/js?id=' + measurementId);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', measurementId);
+    }
+  }
+  window.addEventListener("load", initGoogleAnalytics);
+</script>
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/umd/photoswipe.umd.min.js" async></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/photoswipe/5.4.0/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="飞翔的荷兰人" src="/assets/images/avatar.jpg" onerror="this.style.display='none'">
+  飞翔的荷兰人
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/">首页</a><a class="page-link" href="/archives.html">文章</a><a class="page-link" href="/categories.html">分类</a><a class="page-link" href="/tags.html">标签</a><a class="page-link" href="/about.html">关于</a>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    html .page-banner .page-banner-img > *:first-child {
+      opacity: 0.8;
+    }
+
+    html[data-theme="dark"] .page-banner .page-banner-img > *:first-child {
+      opacity: 0.5744;
+    }
+  </style>
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/assets/images/banners/blank.jpg)"></div>
+        <img class="img-placeholder" src="/assets/images/banners/blank.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">FFmpeg 常用命令</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-05-25T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-05-25
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> eko.zhan</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 26 mins</span>
+  </div>
+<div class="post-tags"><a class="post-tag" href="/tags.html#ffmpeg">#ffmpeg</a></div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('on' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="ffmpeg-常用命令">FFmpeg 常用命令</h2>
+
+<h3 id="音频文件转换">音频文件转换</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i 输入文件.m4a 输出文件.mp3
+ffmpeg -i 输入文件.wav 输出文件.mp3
+ffmpeg -i output_audio.aac -c:a pcm_s16le -ar 48000 -ac 2 output.wav
+ffmpeg -i output.wav -y -acodec libmp3lame -aq 0 output.mp3
+</code></pre></div></div>
+
+<h3 id="音频文件切割">音频文件切割</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.mp3 -ss 00:01:00 -t 00:02:00 -acodec copy output.mp3
+
+</code></pre></div></div>
+
+<p>在这个例子中：</p>
+
+<p>-i input.mp3 指定输入的音频文件。</p>
+
+<p>-ss 00:01:00 设置开始时间为 1 分钟。</p>
+
+<p>-t 00:02:00 设置切割的时长为 2 分钟。</p>
+
+<p>-acodec copy 指定不重编码音频流，直接复制到输出文件。</p>
+
+<p>output.mp3 是输出文件的名称。</p>
+
+<h3 id="查看视频文件详情">查看视频文件详情</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffprobe <span class="nt">-i</span> .<span class="se">\i</span>nput.mp4
+</code></pre></div></div>
+
+<h3 id="给视频文件消音">给视频文件消音</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg.exe <span class="nt">-i</span> happy_teachers_day.mp4 –c copy <span class="nt">-an</span> out.mp4
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-an</td>
+      <td style="text-align: left">disable audio，取消音频输出</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="视频截取">视频截取</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-ss</span> 00:00:00 <span class="nt">-i</span> input.mp4 <span class="nt">-c</span> copy <span class="nt">-t</span> 10 out.mp4
+</code></pre></div></div>
+
+<p>从第一秒开始，取 10 秒的视频输出</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-ss</span> 00:00:30 <span class="nt">-i</span> input.mp4 <span class="nt">-c</span> copy out.mp4
+</code></pre></div></div>
+
+<p>从第 30 秒开始，直到视频结束</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.ts <span class="nt">-ss</span> 00:10 <span class="nt">-to</span> 00:20 <span class="nt">-c</span>:v libx264 <span class="nt">-crf</span> 18 out.ts
+</code></pre></div></div>
+
+<p>从第 10 秒开始到第 20 秒结束，以 libx264 编解码，crf 18 压缩输出</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-crf</td>
+      <td style="text-align: left">Constant Rate Factor<br> 用以平衡视频质量和文件大小的参数，ffmpeg 里取值范围为 0-51，取值越高内容损失越多，视频质量更差。 ffmpeg 的默认值是 23，建议的取值范围是 17-28，可以理解为压缩，取值越高，视频压缩越很，生成的文件越小</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-c:v</td>
+      <td style="text-align: left">-c[:stream_specifier] codec (input/output,per-stream)<br> -codec[:stream_specifier] codec (input/output,per-stream) <br> codec of video，目前 ffmpeg 针对于 mp4 默认使用的是 h264，你可以使用-c:v libx265 生成同等质量，但文件更小的 h265 视频</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">stream_specifier</td>
+      <td style="text-align: left">v 是指视频，a 是指音频</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="视频提取音频">视频提取音频</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.mp4 -ss 00:00:00 -t 00:00:08 -vn -acodec aac output_audio.aac
+</code></pre></div></div>
+
+<h3 id="抽取视频的第一帧">抽取视频的第一帧</h3>
+
+<p>常用于视频封面预览功能</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> happy_teachers_day.mp4 <span class="nt">-ss</span> 1 <span class="nt">-f</span> image2 happy_teachers_day-1.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-ss</td>
+      <td style="text-align: left">set the start time offset<br> 设置开始时间，开始点后多久后正常工作，时间格式：X 秒 或 HOURS:MM:SS.MICROSECONDS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-t</td>
+      <td style="text-align: left">持续时间，单位秒</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="将-wmv-转成-mp4-文件">将 wmv 转成 mp4 文件</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.wmv -vcodec libx264 output.mp4
+</code></pre></div></div>
+
+<h3 id="将-mp4-文件转成-ts-文件">将 mp4 文件转成 ts 文件</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-c</span>:v copy <span class="nt">-c</span>:a copy <span class="nt">-bsf</span>:v h264_mp4toannexb <span class="nt">-vcodec</span> libx264 output.ts
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-bsf:v</td>
+      <td style="text-align: left">从本地视频文件 input.mp4 中提取 H264 数据，并导出至转换文件 output.ts 中</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-vcodec</td>
+      <td style="text-align: left">视频流编解码器，通用的是 libx264</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="将-mp4-文件转成-ps-文件">将 mp4 文件转成 ps 文件</h3>
+
+<p>基于上一步骤来完成，先将 mp4 转成 ts 文件，再将 ts 转 ps</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-c</span>:v copy <span class="nt">-c</span>:a copy <span class="nt">-bsf</span>:v h264_mp4toannexb <span class="nt">-vcodec</span> libx264 output.ts
+ffmpeg <span class="nt">-i</span> output.ts <span class="nt">-c</span> copy <span class="nt">-bsf</span>:a aac_adtstoasc <span class="nt">-f</span> mpegts output2.ts
+ffmpeg <span class="nt">-i</span> output2.ts <span class="nt">-c</span> copy <span class="nt">-f</span> mpegts output.ps
+</code></pre></div></div>
+
+<h3 id="用一张图片和音频文件合成一个-mp4-格式的视频">用一张图片，和音频文件，合成一个 mp4 格式的视频</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-r</span> 24 <span class="nt">-loop</span> 1 <span class="nt">-i</span> qiubao.jpeg <span class="nt">-i</span> qiubao.mp3 <span class="nt">-s</span> 1920x1080 <span class="nt">-pix_fmt</span> yuvj420p <span class="nt">-t</span> 64 <span class="nt">-vcodec</span> libx264 out.mp4
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-loop</td>
+      <td style="text-align: left">循环播放次数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-i</td>
+      <td style="text-align: left">入参，图片路径，正则匹配</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-i</td>
+      <td style="text-align: left">入参，音频地址</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-y</td>
+      <td style="text-align: left">覆盖已有生成文件，如果不填写，运行过程中需要手动输入 y[yes]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-s</td>
+      <td style="text-align: left">对应图片的分辨率，输出 log 中会提示分辨率，虽然指定了分辨率，但是如果原始图片不是该分辨率，还是以原始图片为主</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-t</td>
+      <td style="text-align: left">总时长，输出 log 中会提示音频时长，这里设置为音频时长即可，单位秒</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">可用于入参出参，这里是入参，指定输入文件的帧速率为 24 fps</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-pix_fmt</td>
+      <td style="text-align: left">图片格式，有 yuvj420p 和 yuv444p 两种，输出 log 中会提示</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>运行时日志如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS D:<span class="se">\q</span>iubao&gt; ffmpeg <span class="nt">-r</span> 24 <span class="nt">-loop</span> 1 <span class="nt">-i</span> qiubao.jpeg <span class="nt">-i</span> qiubao.mp3 <span class="nt">-s</span> 1920x1080 <span class="nt">-pix_fmt</span> yuv444p <span class="nt">-t</span> 64 <span class="nt">-vcodec</span> libx264 out.mp4
+ffmpeg version n4.4-80-gbf87bdd3f6-20210817 Copyright <span class="o">(</span>c<span class="o">)</span> 2000-2021 the FFmpeg developers
+  built with gcc 10-win32 <span class="o">(</span>GCC<span class="o">)</span> 20210408
+  configuration: <span class="nt">--prefix</span><span class="o">=</span>/ffbuild/prefix <span class="nt">--pkg-config-flags</span><span class="o">=</span><span class="nt">--static</span> <span class="nt">--pkg-config</span><span class="o">=</span>pkg-config <span class="nt">--cross-prefix</span><span class="o">=</span>x86_64-w64-mingw32- <span class="nt">--arch</span><span class="o">=</span>x86_64 <span class="nt">--target-os</span><span class="o">=</span>mingw32 <span class="nt">--enable-gpl</span> <span class="nt">--enable-version3</span> <span class="nt">--disable-debug</span> <span class="nt">--disable-w32threads</span> <span class="nt">--enable-pthreads</span> <span class="nt">--enable-iconv</span> <span class="nt">--enable-libxml2</span> <span class="nt">--enable-zlib</span> <span class="nt">--enable-libfreetype</span> <span class="nt">--enable-libfribidi</span> <span class="nt">--enable-gmp</span> <span class="nt">--enable-lzma</span> <span class="nt">--enable-fontconfig</span> <span class="nt">--enable-libvorbis</span> <span class="nt">--enable-opencl</span> <span class="nt">--enable-libvmaf</span> <span class="nt">--enable-vulkan</span> <span class="nt">--disable-libxcb</span> <span class="nt">--disable-xlib</span> <span class="nt">--enable-amf</span> <span class="nt">--enable-libaom</span> <span class="nt">--enable-avisynth</span> <span class="nt">--enable-libdav1d</span> <span class="nt">--enable-libdavs2</span> <span class="nt">--disable-libfdk-aac</span> <span class="nt">--enable-ffnvcodec</span> <span class="nt">--enable-cuda-llvm</span> <span class="nt">--enable-libglslang</span> <span class="nt">--enable-libgme</span> <span class="nt">--enable-libass</span> <span class="nt">--enable-libbluray</span> <span class="nt">--enable-libmp3lame</span> <span class="nt">--enable-libopus</span> <span class="nt">--enable-libtheora</span> <span class="nt">--enable-libvpx</span> <span class="nt">--enable-libwebp</span> <span class="nt">--enable-lv2</span> <span class="nt">--enable-libmfx</span> <span class="nt">--enable-libopencore-amrnb</span> <span class="nt">--enable-libopencore-amrwb</span> <span class="nt">--enable-libopenjpeg</span> <span class="nt">--enable-librav1e</span> <span class="nt">--enable-librubberband</span> <span class="nt">--enable-schannel</span> <span class="nt">--enable-sdl2</span> <span class="nt">--enable-libsoxr</span> <span class="nt">--enable-libsrt</span> <span class="nt">--enable-libsvtav1</span> <span class="nt">--enable-libtwolame</span> <span class="nt">--enable-libuavs3d</span> <span class="nt">--disable-libdrm</span> <span class="nt">--disable-vaapi</span> <span class="nt">--enable-libvidstab</span> <span class="nt">--enable-libx264</span> <span class="nt">--enable-libx265</span> <span class="nt">--enable-libxavs2</span> <span class="nt">--enable-libxvid</span> <span class="nt">--enable-libzimg</span> <span class="nt">--extra-cflags</span><span class="o">=</span><span class="nt">-DLIBTWOLAME_STATIC</span> <span class="nt">--extra-cxxflags</span><span class="o">=</span> <span class="nt">--extra-ldflags</span><span class="o">=</span><span class="nt">-pthread</span> <span class="nt">--extra-ldexeflags</span><span class="o">=</span> <span class="nt">--extra-libs</span><span class="o">=</span><span class="nt">-lgomp</span> <span class="nt">--extra-version</span><span class="o">=</span>20210817
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+Input <span class="c">#0, image2, from 'qiubao.jpeg':</span>
+  Duration: 00:00:00.04, start: 0.000000, bitrate: 73799 kb/s
+  Stream <span class="c">#0:0: Video: mjpeg (Baseline), yuvj420p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 72:72 DAR 16:9], 25 fps, 25 tbr, 25 tbn, 25 tbc</span>
+<span class="o">[</span>aac @ 0000019008761500] Estimating duration from bitrate, this may be inaccurate
+Input <span class="c">#1, aac, from 'qiubao.mp3':</span>
+  Duration: 00:01:03.46, bitrate: 259 kb/s
+  Stream <span class="c">#1:0: Audio: aac (LC), 48000 Hz, stereo, fltp, 259 kb/s</span>
+Stream mapping:
+  Stream <span class="c">#0:0 -&gt; #0:0 (mjpeg (native) -&gt; h264 (libx264))</span>
+  Stream <span class="c">#1:0 -&gt; #0:1 (aac (native) -&gt; aac (native))</span>
+Press <span class="o">[</span>q] to stop, <span class="o">[</span>?] <span class="k">for </span><span class="nb">help</span>
+<span class="o">[</span>swscaler @ 0000019008d30f40] deprecated pixel format used, make sure you did <span class="nb">set </span>range correctly
+<span class="o">[</span>libx264 @ 00000190087bd3c0] using <span class="nv">SAR</span><span class="o">=</span>1/1
+<span class="o">[</span>libx264 @ 00000190087bd3c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+<span class="o">[</span>libx264 @ 00000190087bd3c0] profile High 4:4:4 Predictive, level 4.0, 4:4:4, 8-bit
+<span class="o">[</span>libx264 @ 00000190087bd3c0] 264 - core 164 - H.264/MPEG-4 AVC codec - Copyleft 2003-2021 - http://www.videolan.org/x264.html - options: <span class="nv">cabac</span><span class="o">=</span>1 <span class="nv">ref</span><span class="o">=</span>3 <span class="nv">deblock</span><span class="o">=</span>1:0:0 <span class="nv">analyse</span><span class="o">=</span>0x3:0x113 <span class="nv">me</span><span class="o">=</span>hex <span class="nv">subme</span><span class="o">=</span>7 <span class="nv">psy</span><span class="o">=</span>1 <span class="nv">psy_rd</span><span class="o">=</span>1.00:0.00 <span class="nv">mixed_ref</span><span class="o">=</span>1 <span class="nv">me_range</span><span class="o">=</span>16 <span class="nv">chroma_me</span><span class="o">=</span>1 <span class="nv">trellis</span><span class="o">=</span>1 <span class="nv">8x8dct</span><span class="o">=</span>1 <span class="nv">cqm</span><span class="o">=</span>0 <span class="nv">deadzone</span><span class="o">=</span>21,11 <span class="nv">fast_pskip</span><span class="o">=</span>1 <span class="nv">chroma_qp_offset</span><span class="o">=</span>4 <span class="nv">threads</span><span class="o">=</span>12 <span class="nv">lookahead_threads</span><span class="o">=</span>2 <span class="nv">sliced_threads</span><span class="o">=</span>0 <span class="nv">nr</span><span class="o">=</span>0 <span class="nv">decimate</span><span class="o">=</span>1 <span class="nv">interlaced</span><span class="o">=</span>0 <span class="nv">bluray_compat</span><span class="o">=</span>0 <span class="nv">constrained_intra</span><span class="o">=</span>0 <span class="nv">bframes</span><span class="o">=</span>3 <span class="nv">b_pyramid</span><span class="o">=</span>2 <span class="nv">b_adapt</span><span class="o">=</span>1 <span class="nv">b_bias</span><span class="o">=</span>0 <span class="nv">direct</span><span class="o">=</span>1 <span class="nv">weightb</span><span class="o">=</span>1 <span class="nv">open_gop</span><span class="o">=</span>0 <span class="nv">weightp</span><span class="o">=</span>2 <span class="nv">keyint</span><span class="o">=</span>250 <span class="nv">keyint_min</span><span class="o">=</span>24 <span class="nv">scenecut</span><span class="o">=</span>40 <span class="nv">intra_refresh</span><span class="o">=</span>0 <span class="nv">rc_lookahead</span><span class="o">=</span>40 <span class="nv">rc</span><span class="o">=</span>crf <span class="nv">mbtree</span><span class="o">=</span>1 <span class="nv">crf</span><span class="o">=</span>23.0 <span class="nv">qcomp</span><span class="o">=</span>0.60 <span class="nv">qpmin</span><span class="o">=</span>0 <span class="nv">qpmax</span><span class="o">=</span>69 <span class="nv">qpstep</span><span class="o">=</span>4 <span class="nv">ip_ratio</span><span class="o">=</span>1.40 <span class="nv">aq</span><span class="o">=</span>1:1.00
+Output <span class="c">#0, mp4, to 'out.mp4':</span>
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream <span class="c">#0:0: Video: h264 (avc1 / 0x31637661), yuv444p(tv, bt470bg/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 24 fps, 12288 tbn</span>
+    Metadata:
+      encoder         : Lavc58.134.100 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream <span class="c">#0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s</span>
+    Metadata:
+      encoder         : Lavc58.134.100 aac
+<span class="nv">frame</span><span class="o">=</span> 1536 <span class="nv">fps</span><span class="o">=</span> 46 <span class="nv">q</span><span class="o">=</span><span class="nt">-1</span>.0 <span class="nv">Lsize</span><span class="o">=</span>    4597kB <span class="nb">time</span><span class="o">=</span>00:01:03.87 <span class="nv">bitrate</span><span class="o">=</span> 589.5kbits/s <span class="nv">speed</span><span class="o">=</span> 1.9x
+video:3549kB audio:1003kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.981430%
+</code></pre></div></div>
+
+<h3 id="用视频生成图片">用视频生成图片</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-r</span> 24 <span class="nt">-f</span> image2 rec_%3d.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">参数表示按照每秒 24 帧的速度提取</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-r</span> 1 <span class="nt">-f</span> image2 rec_%3d.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">参数表示按照每秒 1 帧的速度提取，1 分钟的视频，生成 60 张图</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-i</span> input.mp4 <span class="nt">-r</span> 0.5 <span class="nt">-f</span> image2 rec_%3d.jpg
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">参数表示按照每秒 0.5 帧的速度提取，也就是 2 秒钟一帧，1 分钟的视频，生成 30 张图</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="用图片生成视频">用图片生成视频</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg <span class="nt">-y</span> <span class="nt">-r</span> 0.2 <span class="nt">-i</span> rec_%3d.jpg <span class="nt">-c</span>:v libx264 <span class="nt">-vf</span> <span class="nv">fps</span><span class="o">=</span>25 out.ts
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-t</td>
+      <td style="text-align: left">duration 用做输入选项（在-i 之前），是限制读取输入文件的的时长；用做输出选项（before an output url），超过这个时间停止写输出文件；比如：循环读取一个输入文件时（-loop 1），当到时间就会停止输出，生成一个 duration 时长的视频。但是如果没有循环选项，而且输入文件短于这个时长时，就会随着输入文件结束就结束，生成视频，视频时长小于 duration。所以我们可以看出 -t 并不仅仅是输出文件时长</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-r</td>
+      <td style="text-align: left">fps 帧率，可以指定两个帧率，输入帧率，输出帧率；输入帧率：-i 之前，设定读入帧率，比如 -r 0.5 ,也就是说 1 秒要播 0.5 个图片，那么一个图也就是要播 2s；输出频率：-i 之后，真正的输出视频播放帧率，不写话，是默认和输入频率一样。比如设 -r 30 ,对应上面的设定，一个图播 2s，那么输出文件播放时，这 2s 内，都是这张图，但是播放了 60 帧</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="视频尺寸裁剪">视频尺寸裁剪</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg -i input.mp4 -vf "crop=1024:512:512:0" output.mp4
+</code></pre></div></div>
+<p>w:h:x:y，其中，1024是宽度，512是高度，x=512是左上角的水平坐标，y=0是垂直坐标</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<p><a href="https://ffmpeg.org/">ffmpeg.org</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/142593316">FFmpeg 基本常识及编码流程</a></p>
+
+<p><a href="https://blog.csdn.net/xindoo/article/details/121451318">使用 ffmpeg 将图片合成为视频(附完整参数介绍)</a></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/summary/2021/11/24/git.html" title="Git">Git</a><a class="next" href="/jekyll/2023/09/10/happy-teachers-day.html" title="Everything happens for a reason">Everything happens for a reason</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/summary/2021/11/11/python.html" title="Python">
+            Python<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2022/05/25/ffmpeg.html" title="FFmpeg 常用命令">
+            FFmpeg 常用命令<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/11/24/git.html" title="Git">
+            Git<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/summary/2021/11/10/linux.html" title="Linux（以 CentOS7.2 为主）">
+            Linux（以 CentOS7.2 为主）<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 eko.zhan</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
